@@ -26,7 +26,7 @@ namespace cs225 {
       a = 1;
     }
     HSLAPixel::HSLAPixel(double hue, double saturation, double luminance, double alpha){
-      h =hue;
+      h = hue;
       s = saturation;
       l = luminance;
       a = alpha;
