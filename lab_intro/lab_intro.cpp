@@ -68,7 +68,7 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
       int r = (x - centerX)^2 + (y - centerY)^2;
       int distance = sqrt(r);
       if (distance < 160) {
-        double lum = (pixel.l - (pixel.l * distance_ * 0.005));
+        double lum = (pixel.l - (pixel.l * distance * 0.005));
         pixel.l = lum;
       } else {
         double lum = pixel.l * 0.2;
