@@ -122,16 +122,16 @@ PNG illinify(PNG image) {
 */
 PNG watermark(PNG firstImage, PNG secondImage) {
 
-  for (unsigned x = 0; x < secondImage.width(); x++) {
-    for (unsigned y = 0; y < secondImage.height(); y++) {
-      HSLAPixel &pixel1 = firstImage.getPixel(x, y);
-      HSLAPixel &pixel2 = secondImage.getPixel(x, y);
-      if (pixel2.l == 1) {
-        pixel1.l = pixel1.l + 0.2;
-      }
-
-    }
-  }
+  // for (unsigned x = 0; x < secondImage.width(); x++) {
+  //   for (unsigned y = 0; y < secondImage.height(); y++) {
+  //     HSLAPixel &pixel1 = firstImage.getPixel(x, y);
+  //     HSLAPixel &pixel2 = secondImage.getPixel(x, y);
+  //     if (pixel2.l == 1) {
+  //       pixel1.l = pixel1.l + 0.2;
+  //     }
+  // 
+  //   }
+  // }
 
   return firstImage;
 }
