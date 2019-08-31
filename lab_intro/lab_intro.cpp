@@ -62,6 +62,21 @@ PNG grayscale(PNG image) {
  */
 PNG createSpotlight(PNG image, int centerX, int centerY) {
 
+  for (unsigned int x = 0, x < image.width(); x++) {
+    for (unsigned y = 0; x < image.height()l y++) {
+      HSLAPixel &pixel = image.getPixel(x, y);
+      int r = (x - centerX)^2 + (y - centerY)^2;
+      int distance = sqrt(r);
+      if (distance < 160) {
+        double lum = (pixel.l - (pixel.l * distance_ * 0.005));
+        pixel.l = lum;
+      } else {
+        double lum = pixel.l * 0.2;
+        pixel.l = lum;
+      }
+    }
+  }
+
   return image;
 
 }
