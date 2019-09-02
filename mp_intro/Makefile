@@ -1,5 +1,5 @@
-EXENAME = mp_intro
-OBJS = main.o PNG.o HSLAPixel.o lodepng.o intro.o
+EXENAME = intro
+OBJS = main.o intro.o PNG.o HSLAPixel.o lodepng.o
 
 CXX = clang++
 CXXFLAGS = $(CS225) -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic
@@ -9,15 +9,13 @@ LDFLAGS = -std=c++1y -stdlib=libc++ -lc++abi -lm
 
 all : $(EXENAME)
 
-output_msg: ; $(CLANG_VERSION_MSG)
-
 $(EXENAME) : output_msg $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
 main.o : main.cpp intro.h cs225/PNG.h cs225/HSLAPixel.h
 	$(CXX) $(CXXFLAGS) main.cpp
 
-intro.o : intro.cpp intro.h
+intro.o : intro.cpp intro.h output_msg
 	$(CXX) $(CXXFLAGS) intro.cpp
 
 PNG.o : cs225/PNG.cpp cs225/PNG.h cs225/HSLAPixel.h cs225/lodepng/lodepng.h
