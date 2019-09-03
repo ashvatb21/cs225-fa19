@@ -23,7 +23,19 @@ void rotate(std::string inputFile, std::string outputFile) {
       pixel2 = temp;
     }
   }
+
+  if (width_ % 2 != 0) {
+    for (int i = 0; i < height_/2; i++) {
+      HSLAPixel & pixel1 = image.getPixel(width_/2, i);
+      HSLAPixel & pixel2 = image.getPixel(width_/2, height - i - 1);
+      HSLAPixel temp = pixel1;
+      pixel1 = pixel2;
+      pixel2 = temp;
+    }
+  }
+  image.writeToFile(outputFile);
 }
+
 
 cs225::PNG myArt(unsigned int width, unsigned int height) {
   cs225::PNG png(width, height);
