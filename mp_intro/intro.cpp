@@ -44,6 +44,6 @@ cs225::PNG myArt(unsigned int width, unsigned int height) {
   return png;
 }
 
-void swap	(cs225::PNG & png, unsigned	x, unsigned 	y, unsigned 	newX, unsigned 	newY) {
-
-}
+// void swap	(cs225::PNG & png, unsigned	x, unsigned 	y, unsigned 	newX, unsigned 	newY) {
+//
+// }
