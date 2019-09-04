@@ -181,27 +181,116 @@ cs225::PNG myArt(unsigned int width, unsigned int height) {
     }
   }
 
-  // for(unsigned int y = png.height()/2; y < png.height()/1.75; y++) {
-  //   unsigned int i = 0;
-  //   unsigned int j = y;
-  //   while(j < png.height()) {
-  //     cs225::HSLAPixel & pixel = png.getPixel(i, j);
-  //     pixel.h = 0;
-  //     pixel.s = 1;
-  //     pixel.l = 0;
-  //     pixel.a = 1;
-  //     i++;
-  //     j++;
-  //   }
-  // }
+  for(unsigned int y = png.height()/2; y < png.height()/1.82; y++) {
+    unsigned int i = 0;
+    unsigned int j = y;
+    while(j < png.height()) {
+      cs225::HSLAPixel & pixel = png.getPixel(i, j);
+      pixel.h = 0;
+      pixel.s = 1;
+      pixel.l = 0;
+      pixel.a = 1;
+      i++;
+      j++;
+    }
+  }
 
+  for(unsigned int x = png.width()/2; x < png.width()/1.82; x++) {
+    unsigned int i = x;
+    unsigned int j = 0;
+    while(i < png.width()) {
+      cs225::HSLAPixel & pixel = png.getPixel(i, j);
+      pixel.h = 0;
+      pixel.s = 1;
+      pixel.l = 0;
+      pixel.a = 1;
+      i++;
+      j++;
+    }
+  }
 
+  for(unsigned int y = png.height()/4; y < png.height()/3; y++) {
+    unsigned int i = 0;
+    unsigned int j = y;
+    while(j < png.height()) {
+      cs225::HSLAPixel & pixel = png.getPixel(i, j);
+      pixel.h = 360;
+      pixel.s = 0;
+      pixel.l = 1;
+      pixel.a = 1;
+      i++;
+      j++;
+    }
+  }
 
+  for(unsigned int x = png.width()/4; x < png.width()/3; x++) {
+    unsigned int i = x;
+    unsigned int j = 0;
+    while(i < png.width()) {
+      cs225::HSLAPixel & pixel = png.getPixel(i, j);
+      pixel.h = 360;
+      pixel.s = 0;
+      pixel.l = 1;
+      pixel.a = 1;
+      i++;
+      j++;
+    }
+  }
 
+  for(unsigned int y = png.height()/1.5; y < png.height()/1.2; y++) {
+    unsigned int i = 0;
+    unsigned int j = y;
+    while(j < png.height()) {
+      cs225::HSLAPixel & pixel = png.getPixel(i, j);
+      pixel.h = 0;
+      pixel.s = 1;
+      pixel.l = 0;
+      pixel.a = 1;
+      i++;
+      j++;
+    }
+  }
 
+  for(unsigned int x = png.width()/1.5; x < png.width()/1.2; x++) {
+    unsigned int i = x;
+    unsigned int j = 0;
+    while(i < png.width()) {
+      cs225::HSLAPixel & pixel = png.getPixel(i, j);
+      pixel.h = 0;
+      pixel.s = 1;
+      pixel.l = 0;
+      pixel.a = 1;
+      i++;
+      j++;
+    }
+  }
+
+  for(unsigned int y = png.height()/1.42; y < png.height()/1.25; y++) {
+    unsigned int i = 0;
+    unsigned int j = y;
+    while(j < png.height()) {
+      cs225::HSLAPixel & pixel = png.getPixel(i, j);
+      pixel.h = 0;
+      pixel.s = 0.87;
+      pixel.l = 0.31;
+      pixel.a = 1;
+      i++;
+      j++;
+    }
+  }
+
+  for(unsigned int x = png.width()/1.42; x < png.width()/1.25; x++) {
+    unsigned int i = x;
+    unsigned int j = 0;
+    while(i < png.width()) {
+      cs225::HSLAPixel & pixel = png.getPixel(i, j);
+      pixel.h = 0;
+      pixel.s = 0.87;
+      pixel.l = 0.31;
+      pixel.a = 1;
+      i++;
+      j++;
+    }
+  }
   return png;
 }
-
-// void swap	(cs225::PNG & png, unsigned	x, unsigned 	y, unsigned 	newX, unsigned 	newY) {
-//
-// }
