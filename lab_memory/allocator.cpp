@@ -3,6 +3,8 @@
  * Implementation of the Allocator class.
  */
 
+
+
 #include <algorithm>
 #include <vector>
 #include <iostream>
@@ -44,14 +46,15 @@ void Allocator::loadRooms(const std::string& file)
 {
     // Read in rooms
     fileio::loadRooms(file);
+    roomCount = fileio::getNumRooms();//Initialized roomCount
     rooms = new Room[roomCount];
 
     totalCapacity = 0;
     int i = 0;
     while (fileio::areMoreRooms()) {
-        i++; 
-        rooms[i] = fileio::nextRoom();
-        totalCapacity += rooms[i].capacity;
+      rooms[i] = fileio::nextRoom();
+      totalCapacity += rooms[i].capacity;
+      i++;//Moved i++ down from being the first comment of the for loop
     }
 }
 
@@ -117,4 +120,51 @@ Room* Allocator::largestOpening()
         }
     }
     return &rooms[index];
+}
+
+Allocator::Allocator(const Allocator& other) //Added copy constructor, destructor, and =operator
+{
+    copy(other);
+}
+
+Allocator& Allocator::operator=(const Allocator& other)
+{
+    if (this != &other) {
+        clear();
+        copy(other);
+    }
+    return *this;
+}
+
+Allocator::~Allocator()
+{
+    clear();
+}
+
+void Allocator::clear()
+{
+    if (alpha != NULL) {
+      delete [] alpha;
+      alpha = NULL;
+    }
+
+    if (rooms != NULL) {
+      delete [] rooms;
+      rooms = NULL;
+    }
+}
+
+void Allocator::copy(const Allocator& other)
+{
+    roomCount = other.roomCount;
+    studentCount = other.studentCount;
+    totalCapacity = other.totalCapacity;
+    alpha = new Letter[sizeof(other.alpha)];
+    for(unsigned long i = 0; i < sizeof(other.alpha); i++) {
+      alpha[i] = other.alpha[i];
+    }
+    rooms = new Room[sizeof(other.alpha)];
+    for(unsigned long i = 0; i < sizeof(other.rooms); i++) {
+      rooms[i] = other.rooms[i];
+    }
 }
