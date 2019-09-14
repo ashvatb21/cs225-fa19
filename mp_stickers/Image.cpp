@@ -7,7 +7,7 @@ void Image::lighten() {
   for (unsigned x = 0; x < this->width(); x++) {
     for (unsigned y = 0; y < this->height(); y++) {
       cs225::HSLAPixel & pixel = this->getPixel(x, y);
-      pixel.l = pixel.l + 0.1;
+      pixel.l += 0.1;
       if (pixel.l > 1) {
         pixel.l = 1;
       }
@@ -20,7 +20,7 @@ void Image::lighten(double amount) {
   for (unsigned x = 0; x < this->width(); x++) {
     for (unsigned y = 0; y < this->height(); y++) {
       cs225::HSLAPixel & pixel = this->getPixel(x, y);
-      pixel.l = pixel.l + amount;
+      pixel.l += amount;
       if (pixel.l > 1) {
         pixel.l = 1;
       }
@@ -33,7 +33,7 @@ void Image::darken() {
   for (unsigned x = 0; x < this->width(); x++) {
     for (unsigned y = 0; y < this->height(); y++) {
       cs225::HSLAPixel & pixel = this->getPixel(x, y);
-      pixel.l = pixel.l - 0.1;
+      pixel.l -= 0.1;
       if (pixel.l < 0) {
         pixel.l = 0;
       }
@@ -46,7 +46,7 @@ void Image::darken(double amount) {
   for (unsigned x = 0; x < this->width(); x++) {
     for (unsigned y = 0; y < this->height(); y++) {
       cs225::HSLAPixel & pixel = this->getPixel(x, y);
-      pixel.l = pixel.l - amount;
+      pixel.l -= amount;
       if (pixel.l < 0) {
         pixel.l = 0;
       }
