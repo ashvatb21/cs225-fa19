@@ -147,7 +147,13 @@ void Image::Illinify() {
 }
 
 void Image::scale(double factor) {
-
+  if (factor > 0) {
+    unsigned int newWidth = factor * this->width();
+    unsigned int newHeight = factor * this->height();
+    Image *temp = new Image();
+    *temp = *this;
+    this->resize(newWidth, newHeight); 
+  }
 }
 
 void Image::scale(unsigned w, unsigned h) {
