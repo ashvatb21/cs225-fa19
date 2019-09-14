@@ -117,7 +117,18 @@ void Image::grayscale() {
 }
 
 void Image::rotateColor(double degrees) {
-
+  for (unsigned x = 0; x < this->width(); x++) {
+      for (unsigned y = 0; y < this->height(); y++) {
+        cs225::HSLAPixel & pixel = this->getPixel(x, y);
+        pixel.h += degrees;
+        if (pixel.h >= 360) {
+          pixel.h -= 360;
+        }
+        if (pixel.h < 0) {
+          pixel.h += 360;
+        }
+    }
+  }
 }
 
 void Image::Illinify() {
