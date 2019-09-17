@@ -17,4 +17,13 @@ public:
   void removeSticker(unsigned index);
   Image* getSticker(unsigned index);
   Image render() const;
+
+private:
+  void destroy();
+  void copy(const StickerSheet &other);
+  unsigned int maximum;
+  Image **arrayImg;
+  unsigned int *xarray;
+  unsigned int *yarray;
+  Image *image_;
 };
