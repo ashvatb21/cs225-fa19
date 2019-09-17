@@ -181,14 +181,8 @@ void Image::scale(unsigned w, unsigned h) {
       factor = factor_w;
     }
 
-    if (factor_h < 1 && factor_w > 1) {
-      factor = factor_h;
-    }
-    if (factor_w < 1 && factor_h > 1) {
-      factor = factor_w;
-    }
-
     this->scale(factor);
+  }
 
   // double factor_w = w / this->width();
 	// double factor_h = h / this->height();
