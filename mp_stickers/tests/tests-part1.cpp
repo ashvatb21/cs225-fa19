@@ -110,8 +110,6 @@ TEST_CASE("Image scale(2.0) results in the correct width/height", "[weight=1][pa
 
   REQUIRE( img.height() * 2 == result.height() );
 
-  std::cout << "Image Height " << img.height() << std::endl;  //TEST CASE ADDED BY ME
-  std::cout << "Image Width " << img.width() << std::endl;  //TEST CASE ADDED BY ME
 }
 
 TEST_CASE("Image scale(0.5) results in the correct width/height", "[weight=1][part=1]") {
@@ -122,8 +120,6 @@ TEST_CASE("Image scale(0.5) results in the correct width/height", "[weight=1][pa
 
   REQUIRE( img.height() * 0.5 == result.height() );
 
-  std::cout << "Image Height " << img.height() << std::endl;  //TEST CASE ADDED BY ME
-  std::cout << "Image Width " << img.width() << std::endl;  //TEST CASE ADDED BY ME
 }
 
 TEST_CASE("Image scale(2) scales pixel data in a reasonable way", "[weight=1][part=1]") {
@@ -135,8 +131,6 @@ TEST_CASE("Image scale(2) scales pixel data in a reasonable way", "[weight=1][pa
   REQUIRE( result.getPixel(100, 100).h > 40 );
   REQUIRE( result.getPixel(100, 100).h < 60 );
 
-  std::cout << "Image Height " << img.height() << std::endl;  //TEST CASE ADDED BY ME
-  std::cout << "Image Width " << img.width() << std::endl;  //TEST CASE ADDED BY ME
 }
 
 TEST_CASE("Image scale(0.5) scales pixel data in a reasonable way", "[weight=1][part=1]") {
@@ -148,6 +142,4 @@ TEST_CASE("Image scale(0.5) scales pixel data in a reasonable way", "[weight=1][
   REQUIRE( result.getPixel(100, 20).h > 180 );
   REQUIRE( result.getPixel(100, 20).h < 220 );
 
-  std::cout << "Image Height " << img.height() << std::endl;  //TEST CASE ADDED BY ME
-  std::cout << "Image Width " << img.width() << std::endl;  //TEST CASE ADDED BY ME
 }

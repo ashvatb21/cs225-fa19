@@ -178,7 +178,7 @@ void Image::scale(unsigned w, unsigned h) {
     if (factor_w >= factor_h) {
       factor = factor_h;
     }
-    if (factor_w < factor_h)
+    if (factor_w < factor_h) {
       factor = factor_w;
     }
 
