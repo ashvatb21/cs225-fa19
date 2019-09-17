@@ -173,11 +173,12 @@ void Image::scale(unsigned w, unsigned h) {
 
     double factor_w = w / this->width();
   	double factor_h = h / this->height();
-    double factor;
+    double factor = 1.0;
 
     if (factor_w >= factor_h) {
       factor = factor_h;
-    } else {
+    }
+    if (factor_w < factor_h)
       factor = factor_w;
     }
 
