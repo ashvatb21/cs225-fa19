@@ -5,7 +5,7 @@
 StickerSheet::StickerSheet(const Image & picture, unsigned max) {
   arrayImg = new Image*[max];
   maximum = max;
-  image_ = new Image(picture);
+  img = new Image(picture);
   xarray = new unsigned int[max];
   yarray = new unsigned int[max];
   for(unsigned i = 0; i < max; i++) {
@@ -59,21 +59,25 @@ void StickerSheet::destroy() {
       arrayImg[i] = NULL;
     }
   }
-  if(xarray != NULL) {}
-    for(unsigned i = 0; i < maximum; i++) {
-      delete xarray[i];
-      xarray[i] = NULL;
-    }
-  }
 
-  if(yarray != NULL) {}
-    for(unsigned i = 0; i < maximum; i++) {
-      delete yarray[i];
-      yarray[i] = NULL;
-    }
-  }
+  // if(xarray != NULL) {}
+  //   for(unsigned i = 0; i < maximum; i++) {
+  //     delete xarray[i];
+  //     xarray[i] = NULL;
+  //   }
+  // }
+  //
+  // if(yarray != NULL) {}
+  //   for(unsigned i = 0; i < maximum; i++) {
+  //     delete yarray[i];
+  //     yarray[i] = NULL;
+  //   }
+  // }
 
-    delete image_;
+    delete img;
+    delete [] arrayImg;
+    delete [] xarray;
+    delete [] yarray;
 
     arrayImg = NULL;
     xarray = NULL;
@@ -81,13 +85,13 @@ void StickerSheet::destroy() {
 }
 
 void StickerSheet::copy(const StickerSheet &other) {
-  image_ = new Image(*other.image_);
+  img = new Image(*other.img);
   maximum = other.maximum;
 
-  arrayImg = new Image*[maximum];
   xarray = new unsigned[maximum];
   yarray = new unsigned[maximum];
-
+  arrayImg = new Image*[maximum];
+  
   for(unsigned i = 0; i < maximum; i++) {
     if(other.arrayImg[i] != NULL) {
       arrayImg[i] = new Image(*other.arrayImg[i]);

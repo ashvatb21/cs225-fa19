@@ -25,5 +25,5 @@ private:
   Image **arrayImg;
   unsigned int *xarray;
   unsigned int *yarray;
-  Image *image_;
+  Image *img;
 };
