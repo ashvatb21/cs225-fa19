@@ -169,4 +169,33 @@ void Image::scale(double factor) {
 
 void Image::scale(unsigned w, unsigned h) {
 
+  double factor_w = w / this->width();
+	double factor_h = h / this->height();
+  unsigned int width = this->width();
+  unsigned int height = this->height();
+
+	Image *temp = new Image();
+  *temp = *this;
+
+  double factor;
+
+  if (factor_h > factor_w) {
+    factor = factor_w;
+  } else {
+    factor = factor_h;
+  }
+
+  unsigned int newWidth = factor * this->width();
+  unsigned int newHeight = factor * this->height();
+
+  for (unsigned int x = 0; x < newWidth; x++) {
+    for (unsigned int y = 0; y < newHeight; y++) {
+      cs225::HSLAPixel & pixel1 = this->getPixel(x, y);
+      cs225::HSLAPixel & pixel2 = temp->getPixel((unsigned int)((width*x)/newWidth), (unsigned int)((height*y)/newHeight));
+      pixel1 = pixel2;
+    }
+  }
+
+  delete temp;
+
 }
