@@ -24,4 +24,3 @@ class Drawable
      */
     virtual void draw(cs225::PNG* canvas) const = 0;
 };
-
