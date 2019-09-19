@@ -143,3 +143,46 @@ TEST_CASE("Image scale(0.5) scales pixel data in a reasonable way", "[weight=1][
   REQUIRE( result.getPixel(100, 20).h < 220 );
 
 }
+
+
+//Scale width height
+TEST_CASE("Image scale(240, 50) results in the correct width/height", "[weight=1][part=1]") {
+  Image img = createRainbowImage();
+
+  Image result = createRainbowImage();
+  result.scale(240, 50);
+
+  REQUIRE( img.height() * 0.5 == result.height() );
+
+}
+
+TEST_CASE("Image scale(180, 80) results in the correct width/height", "[weight=1][part=1]") {
+  Image img = createRainbowImage();
+
+  Image result = createRainbowImage();
+  result.scale(180, 80);
+
+  REQUIRE( img.height() * 0.5 == result.height() );
+
+}
+
+TEST_CASE("Image scale(240, 50) scales pixel data in a reasonable way", "[weight=1][part=1]") {
+  Image img = createRainbowImage();
+
+  Image result = createRainbowImage();
+  result.scale(2);
+
+  REQUIRE( result.getPixel(100, 100).h > 40 );
+  REQUIRE( result.getPixel(100, 100).h < 60 );
+
+}
+
+TEST_CASE("Image scale(180, 80) scales pixel data in a reasonable way", "[weight=1][part=1]") {
+  Image img = createRainbowImage();
+
+  Image result = createRainbowImage();
+  result.scale(0.5);
+
+  REQUIRE( result.getPixel(100, 20).h > 180 );
+  REQUIRE( result.getPixel(100, 20).h < 220 );
+}

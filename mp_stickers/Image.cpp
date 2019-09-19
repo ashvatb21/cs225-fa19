@@ -171,8 +171,10 @@ void Image::scale(unsigned w, unsigned h) {
 
   if (w > 0  && h > 0) {
 
-    double factor_w = w / this->width();
-  	double factor_h = h / this->height();
+    double width = this->width();
+    double height = this->height();
+    double factor_w = w / width;
+  	double factor_h = h / height;
     double factor = 1.0;
 
     if (factor_w >= factor_h) {
