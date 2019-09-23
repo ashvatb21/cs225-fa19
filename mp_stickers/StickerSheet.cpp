@@ -14,7 +14,6 @@ StickerSheet::StickerSheet(const Image & picture, unsigned max) {
     ImageArray[i] = NULL;
     xarray[i] = 0;
     yarray[i] = 0;
-    img = NULL;
   }
 }
 
@@ -24,6 +23,14 @@ StickerSheet::~StickerSheet() {
 
 StickerSheet::StickerSheet(const StickerSheet & other) {
   copy(other);
+}
+
+const StickerSheet& StickerSheet::operator=(const StickerSheet &other){
+  if (this != &other) {
+    destroy();
+    copy(other);
+  }
+  return *this;
 }
 
 void StickerSheet::changeMaxStickers(unsigned max) {
@@ -105,7 +112,6 @@ void StickerSheet::removeSticker(unsigned index) {
   ImageArray[index] = NULL;
   xarray[index] = 0;
   yarray[index] = 0;
-  img = NULL;
 }
 
 Image * StickerSheet::getSticker(unsigned index) {
@@ -151,7 +157,7 @@ Image StickerSheet::render() {
       }
     }
   }
-  
+
   return *output;
 }
 
@@ -171,7 +177,6 @@ void StickerSheet::destroy() {
     ImageArray = NULL;
     xarray = NULL;
     yarray = NULL;
-    img = NULL;
 }
 
 void StickerSheet::copy(const StickerSheet &other) {
@@ -193,12 +198,4 @@ void StickerSheet::copy(const StickerSheet &other) {
       ImageArray[i] = NULL;
     }
   }
-}
-
-const StickerSheet& StickerSheet::operator=(const StickerSheet &other){
-  if (this != &other) {
-    destroy();
-    copy(other);
-  }
-  return *this;
 }
