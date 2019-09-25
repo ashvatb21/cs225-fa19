@@ -221,3 +221,11 @@ void Image::scale(unsigned w, unsigned h) {
   // delete temp;
 
 }
+
+Image::Image(const Image & pic)
+:PNG::PNG(pic) {
+}
+
+Image::Image()
+:PNG::PNG() {
+}

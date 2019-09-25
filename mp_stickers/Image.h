@@ -22,5 +22,7 @@ public:
   void Illinify();
   void scale(double factor);
   void scale(unsigned w, unsigned h);
+  Image(const Image & other);
+  Image();
 
 };
