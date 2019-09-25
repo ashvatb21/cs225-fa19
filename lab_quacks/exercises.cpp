@@ -47,6 +47,9 @@ int RecursionExercises::sumDigits(int n) {
  */
 int RecursionExercises::triangle(int rows)
 {
-
-    return -1;
+  if (rows == 0) {
+    return 0;
+  } else {
+    return rows + RecursionExercises::triangle(rows - 1);
+  }
 }
