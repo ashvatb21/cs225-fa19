@@ -31,7 +31,17 @@ T sum(stack<T>& s)
 {
 
     // Your code here
-    return T(); // stub return value (0 for primitive types). Change this!
+    if (s.empty()) {
+      return 0;
+    }
+    T top_ = s.top();
+    s.pop();
+    T sum_ = top_ + sum(s); // Recursion call before push, Keeps original order of stack
+    s.push(top_ );
+    return sum_;
+
+
+    // stub return value (0 for primitive types). Change this!
                 // Note: T() is the default value for objects, and 0 for
                 // primitive types
 }
