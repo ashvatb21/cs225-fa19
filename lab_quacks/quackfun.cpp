@@ -116,6 +116,41 @@ void scramble(queue<T>& q)
     // optional: queue<T> q2;
 
     // Your code here
+
+    queue<T> q2;
+    unsigned i = 1;
+    while(!q.empty()) {
+
+      if (i % 2 == 0) {
+        if (i > q.size()) {
+           i = q.size();
+         }
+
+         for (unsigned j = 0; j < i; j++) {
+           T a = q.front();
+           s.push(a);
+           q.pop();
+         }
+
+         for (unsigned j = 0; j < i; j++) {
+           T a = s.top();
+           q2.push(a);
+           s.pop();
+         }
+       }
+       else {
+         if (i > q.size()) {
+           i = q.size();
+         }
+         for (unsigned j = 0; j < i; j++) {
+           T a = q.front();
+           q2.push(a);
+           q.pop();
+         }
+       }
+       i++;
+     }
+     q = q2;
 }
 
 /**
