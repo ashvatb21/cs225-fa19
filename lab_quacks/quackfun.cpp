@@ -178,13 +178,30 @@ void scramble(queue<T>& q)
 template <typename T>
 bool verifySame(stack<T>& s, queue<T>& q)
 {
-    bool retval = true; // optional
-    // T temp1; // rename me
-    // T temp2; // rename :)
+  bool retval = false; // optional
+  T queue_;
+  T stack_;
 
-    // Your code here
+  if (s.empty()) {
+    return true;
+  }
 
-    return retval;
+  stack_ = s.top();
+  s.pop();
+  retval = verifySame(s, q); //Getting to bottom of stack
+
+  s.push(stack_);
+
+  queue_ = q.front();
+  q.pop();
+  q.push(queue_);
+
+  if (stack_ != queue_) {
+    return false;
+  }
+
+  return retval;
 }
+
 
 }
