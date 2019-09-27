@@ -47,18 +47,19 @@ void List<T>::_destroy() {
  */
 template <typename T>
 void List<T>::insertFront(T const & ndata) {
-  /// @todo Graded in MP3.1
+  //@todo Graded in MP3.1
   ListNode * newNode = new ListNode(ndata);
-  newNode -> next = head_;
-  newNode -> prev = NULL;
 
-  if (head_ != NULL) {
-    head_ -> prev = newNode;
-  }
-  if (tail_ == NULL) {
+  if (length_ == 0) {
+    head_ = newNode;
     tail_ = newNode;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+  } else {
+    newNode->next = head_;
+    head_ = newNode;
+    newNode->prev = NULL;
   }
-
 
   length_++;
 
@@ -80,22 +81,12 @@ void List<T>::insertBack(const T & ndata) {
     tail_ = newNode;
     length_++;
   } else {
+    tail_->next = newNode;
     newNode->prev = tail_;
-    tail_ = newNode;
+    //tail_ = newNode;
+    tail_ = tail_->next;
     length_++;
   }
-
-  // newNode -> next = NULL;
-  // newNode -> prev = NULL;
-  // ListNode * temp = head_;
-  // while(temp->next != NULL) {
-  //   temp = temp->next;
-  // }
-  // temp->next = newNode;
-  // newNode->prev = temp;
-  // tail_ = temp;
-  //
-  // length_++;
 }
 
 /**
