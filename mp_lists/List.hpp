@@ -107,10 +107,10 @@ void List<T>::insertBack(const T & ndata) {
  */
 template <typename T>
 typename List<T>::ListNode * List<T>::split(ListNode * start, int splitPoint) {
-  /// @todo Graded in MP3.1
+  / @todo Graded in MP3.1
   ListNode * curr = start;
 
-  for (int i = 0; i < splitPoint || curr != NULL; i++) {
+  for (int i = 0; i < splitPoint && curr != NULL; i++) {
     curr = curr->next;
   }
 
@@ -120,6 +120,17 @@ typename List<T>::ListNode * List<T>::split(ListNode * start, int splitPoint) {
   }
 
   return NULL;
+
+  ListNode * curr = start;
+	for (int i = 0; i < splitPoint && curr != NULL; i++) {
+		curr = curr->next;
+		if (curr == NULL) {
+			return NULL;
+		}
+	}
+	curr->prev->next = NULL;
+	curr->prev = NULL;
+	return curr;
 }
 
 /**
@@ -133,7 +144,27 @@ typename List<T>::ListNode * List<T>::split(ListNode * start, int splitPoint) {
  */
 template <typename T>
 void List<T>::waterfall() {
-  /// @todo Graded in MP3.1
+  / @todo Graded in MP3.1
+  ListNode * current;
+  ListNode * temp;
+  int index = 1;
+  current = head_;
+  while(current != NULL && current != tail_) {
+    if (index % 2 == 0) {
+      //temp = current;
+      current->prev->next = current->next;
+      current->next->prev = current->prev;
+      current->prev = tail_;
+      tail_->next = current;
+      current->next = NULL;
+      tail_ = current;
+      current = current->next;
+    } else {
+      current = current->next;
+    }
+    index++;
+  }if(head_ == NULL){return;}
+
 }
 
 /**
