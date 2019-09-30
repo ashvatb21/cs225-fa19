@@ -6,8 +6,8 @@
 template <class T>
 List<T>::List() {
   // @TODO: graded in MP3.1
-    ListNode* head_ = NULL;
-    ListNode* tail_ = NULL;
+    head_ = NULL;
+    tail_ = NULL;
     length_ = 0;
 }
 
@@ -72,6 +72,7 @@ void List<T>::insertFront(T const & ndata) {
     newNode->prev = NULL;
   } else {
     newNode->next = head_;
+    head_->prev = newNode;
     head_ = newNode;
     newNode->prev = NULL;
   }
@@ -169,7 +170,7 @@ void List<T>::waterfall() {
       current->next = NULL;
       tail_ = current;
     }
-    
+
     index++;
     current = temp;
   }

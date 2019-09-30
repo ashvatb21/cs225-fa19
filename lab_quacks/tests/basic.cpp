@@ -183,71 +183,71 @@ TEST_CASE("scramble 9", "[valgrind][weight=3]") {
     }
 }
 
-TEST_CASE ("verifySame (EXTRA CREDIT)", "[valgrind][weight=0][extraCredit=1]") {
-    SECTION("Result for different stack and queue is different") {
-        stack<int> s;
-        queue<int> q;
-        for (int i = 2; i < 7; i++) {
-            s.push(i);
-            q.push(i);
-        }
-        s.push(4);
-        q.push(6);
-        for (int i = 7; i < 10; i++) {
-            s.push(i);
-            q.push(i);
-        }
-        stack<int> sb = s;
-        queue<int> qb = q;
-
-        stack<int>::_ctor_count = 0;
-        queue<int>::_ctor_count = 0;
-
-        REQUIRE(verifySame(s, q)== false);
-
-        if (s != sb) {
-            FAIL("Stack was modified");
-        }
-        if (q != qb) {
-            FAIL("Queue was modified");
-        }
-
-        if (stack<int>::_ctor_count != 0) {
-            FAIL("You may not make a new stack object");
-        }
-        if (queue<int>::_ctor_count != 0) {
-            FAIL("You may not make a new queue object");
-        }
-    }
-
-    // Test the same
-    SECTION("Result for same stack and queue is same") {
-        stack<int> s;
-        queue<int> q;
-        for (int i = 2; i < 7; i++) {
-            s.push(i);
-            q.push(i);
-        }
-        stack<int> sb = s;
-        queue<int> qb = q;
-
-        stack<int>::_ctor_count = 0;
-        queue<int>::_ctor_count = 0;
-
-        REQUIRE(verifySame(s, q) == true);
-
-        if (s != sb) {
-            FAIL("Stack was modified");
-        }
-        if (q != qb) {
-            FAIL("Queue was modified");
-        }
-
-        if (stack<int>::_ctor_count != 0) {
-            FAIL("You may not make a new stack object");
-        }
-        if (queue<int>::_ctor_count != 0) {
-            FAIL("You may not make a new queue object");
-        }
-    }
-}
+// TEST_CASE ("verifySame (EXTRA CREDIT)", "[valgrind][weight=0][extraCredit=1]") {
+//     SECTION("Result for different stack and queue is different") {
+//         stack<int> s;
+//         queue<int> q;
+//         for (int i = 2; i < 7; i++) {
+//             s.push(i);
+//             q.push(i);
+//         }
+//         s.push(4);
+//         q.push(6);
+//         for (int i = 7; i < 10; i++) {
+//             s.push(i);
+//             q.push(i);
+//         }
+//         stack<int> sb = s;
+//         queue<int> qb = q;
+//
+//         stack<int>::_ctor_count = 0;
+//         queue<int>::_ctor_count = 0;
+//
+//         REQUIRE(verifySame(s, q)== false);
+//
+//         if (s != sb) {
+//             FAIL("Stack was modified");
+//         }
+//         if (q != qb) {
+//             FAIL("Queue was modified");
+//         }
+//
+//         if (stack<int>::_ctor_count != 0) {
+//             FAIL("You may not make a new stack object");
+//         }
+//         if (queue<int>::_ctor_count != 0) {
+//             FAIL("You may not make a new queue object");
+//         }
+//     }
+//
+//     // Test the same
+//     SECTION("Result for same stack and queue is same") {
+//         stack<int> s;
+//         queue<int> q;
+//         for (int i = 2; i < 7; i++) {
+//             s.push(i);
+//             q.push(i);
+//         }
+//         stack<int> sb = s;
+//         queue<int> qb = q;
+//
+//         stack<int>::_ctor_count = 0;
+//         queue<int>::_ctor_count = 0;
+//
+//         REQUIRE(verifySame(s, q) == true);
+//
+//         if (s != sb) {
+//             FAIL("Stack was modified");
+//         }
+//         if (q != qb) {
+//             FAIL("Queue was modified");
+//         }
+//
+//         if (stack<int>::_ctor_count != 0) {
+//             FAIL("You may not make a new stack object");
+//         }
+//         if (queue<int>::_ctor_count != 0) {
+//             FAIL("You may not make a new queue object");
+//         }
+//     }
+// }
