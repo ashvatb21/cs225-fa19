@@ -8,6 +8,7 @@ List<T>::List() {
   // @TODO: graded in MP3.1
     ListNode* head_ = NULL;
     ListNode* tail_ = NULL;
+    length_ = 0;
 }
 
 /**
@@ -17,7 +18,7 @@ List<T>::List() {
 template <typename T>
 typename List<T>::ListIterator List<T>::begin() const {
   // @TODO: graded in MP3.1
-  return List<T>::ListIterator(NULL);
+  return List<T>::ListIterator(head_);
 }
 
 /**
@@ -37,6 +38,20 @@ typename List<T>::ListIterator List<T>::end() const {
 template <typename T>
 void List<T>::_destroy() {
   /// @todo Graded in MP3.1
+  ListNode * current;
+  ListNode * temp;
+  current = head_;
+
+  while(current != NULL){
+    temp = current;
+    current = current->next;
+    delete temp;
+  }
+
+  head_ = NULL;
+  tail_ = NULL;
+  temp = NULL;
+  length_= 0;
 }
 
 /**
@@ -107,29 +122,21 @@ void List<T>::insertBack(const T & ndata) {
  */
 template <typename T>
 typename List<T>::ListNode * List<T>::split(ListNode * start, int splitPoint) {
-  / @todo Graded in MP3.1
-  ListNode * curr = start;
-
-  for (int i = 0; i < splitPoint && curr != NULL; i++) {
-    curr = curr->next;
-  }
-
-  if (curr != NULL) {
-      curr->prev->next = NULL;
-      curr->prev = NULL;
-  }
-
-  return NULL;
+  //@todo Graded in MP3.1
 
   ListNode * curr = start;
+
 	for (int i = 0; i < splitPoint && curr != NULL; i++) {
 		curr = curr->next;
 		if (curr == NULL) {
 			return NULL;
 		}
 	}
-	curr->prev->next = NULL;
-	curr->prev = NULL;
+
+  if (curr != NULL) {
+    curr->prev->next = NULL;
+    curr->prev = NULL;
+  }
 	return curr;
 }
 
@@ -144,26 +151,28 @@ typename List<T>::ListNode * List<T>::split(ListNode * start, int splitPoint) {
  */
 template <typename T>
 void List<T>::waterfall() {
-  / @todo Graded in MP3.1
-  ListNode * current;
+  // @todo Graded in MP3.1
+
+  ListNode * current = head_;
   ListNode * temp;
-  int index = 1;
-  current = head_;
-  while(current != NULL && current != tail_) {
-    if (index % 2 == 0) {
-      //temp = current;
+  int index = 0;
+
+  while (current != tail_) {
+    temp = current->next;
+
+    if (index % 2 == 1) {
       current->prev->next = current->next;
       current->next->prev = current->prev;
-      current->prev = tail_;
+
       tail_->next = current;
+      current->prev = tail_;
       current->next = NULL;
       tail_ = current;
-      current = current->next;
-    } else {
-      current = current->next;
     }
+    
     index++;
-  }if(head_ == NULL){return;}
+    current = temp;
+  }
 
 }
 

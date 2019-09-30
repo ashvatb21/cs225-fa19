@@ -95,7 +95,7 @@ List<T> List<T>::split(int splitPoint) {
         tail_ = head_;
         while (tail_ -> next != NULL)
             tail_ = tail_->next;
-        length_ = splitPoint;
+            length_ = splitPoint;
     }
 
     // set up the returned list
