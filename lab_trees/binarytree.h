@@ -94,7 +94,7 @@ class BinaryTree
         /**
          * @return The root of the binary tree
          */
-        Node* getRoot() const;  
+        Node* getRoot() const;
 
         /**
          * This lab deals with the following six helper functions:
@@ -191,6 +191,10 @@ class BinaryTree
          * @param subRoot The current node in the recursion
          */
         void printLeftToRight(const Node* subRoot) const;
+
+
+
+        void mirror(Node * subRoot);
 
 
 
