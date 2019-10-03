@@ -125,20 +125,27 @@ template <typename T>
 typename List<T>::ListNode * List<T>::split(ListNode * start, int splitPoint) {
   //@todo Graded in MP3.1
 
+  if (splitPoint >= length_) {
+    return head_;
+  }
+
   ListNode * curr = start;
 
 	for (int i = 0; i < splitPoint && curr != NULL; i++) {
 		curr = curr->next;
 		if (curr == NULL) {
-			return NULL;
+			return start;
 		}
 	}
 
+
   if (curr != NULL) {
+    tail_ = curr->prev;
     curr->prev->next = NULL;
     curr->prev = NULL;
   }
 	return curr;
+
 }
 
 /**
@@ -390,6 +397,6 @@ typename List<T>::ListNode* List<T>::mergesort(ListNode * start, int chainLength
   temp = mergesort(temp, chainLength - splitPoint);
 
   start = merge(start, temp);
-  
+
   return start;
 }
