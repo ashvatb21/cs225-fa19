@@ -5,6 +5,7 @@
  */
 #include "TreeTraversals/InorderTraversal.h"
 #include <iostream>
+#include <vector>
 
 /**
  * @return The height of the binary tree. Recall that the height of a binary
@@ -126,8 +127,30 @@ template <typename T>
 bool BinaryTree<T>::isOrderedIterative() const
 {
     // your code here
-    return false;
+    return isOrderedIterative(root);
 }
+
+//Helper function for isOrderedIterative()
+template <typename T>
+bool BinaryTree<T>::isOrderedIterative(Node * root) const {
+
+  InorderTraversal<T> iot(root);
+  int temp = 1;
+  int count = 0;
+  bool isOrdered = true;
+
+  for (typename TreeTraversal<T>::Iterator it = iot.begin(); it != iot.end(); ++it) {
+    if (count > 0) {
+      if ((*it)->elem <= temp) {
+        isOrdered = false;
+      }
+    }
+    temp = (*it)->elem;
+    count++;
+  }
+  return isOrdered;
+}
+
 
 /**
  * isOrdered() function recursive version
@@ -139,7 +162,29 @@ template <typename T>
 bool BinaryTree<T>::isOrderedRecursive() const
 {
     // your code here
-    return false;
+    std::vector<T> inOrder;
+    bool isOrdered = isOrderedRecursive(root, inOrder);
+    return isOrdered;
+}
+
+//Helper function for isOrdered Recursive
+template <typename T>
+bool BinaryTree<T>::isOrderedRecursive(Node *subRoot, std::vector<T> & inOrder) const {
+  if (subRoot == NULL) {
+    return true;
+  }
+
+  isOrderedRecursive(subRoot->left, inOrder);
+  inOrder.push_back(subRoot->elem);
+  isOrderedRecursive(subRoot->right, inOrder);
+
+  bool isOrdered = true;
+  for(unsigned long i = 0; i < inOrder.size() - 1; i++){
+    if(inOrder[i] >= inOrder[i+1]){
+      isOrdered = false;
+    }
+  }
+  return isOrdered;
 }
 
 
@@ -155,6 +200,26 @@ template <typename T>
 void BinaryTree<T>::getPaths(std::vector<std::vector<T>>& paths) const
 {
     // your code here
+    std::vector<T> temp;
+    getPaths(root, paths, temp);
+}
+
+template <typename T>
+void BinaryTree<T>::getPaths(Node * subRoot, std::vector<std::vector<T>> & paths, std::vector<T> temp) const {
+
+  if (subRoot == NULL) {
+    return;
+  }
+
+  temp.push_back(subRoot->elem);
+
+  if (subRoot->left==NULL && subRoot->right == NULL)
+  {
+    paths.push_back(temp);
+  }
+
+  getPaths(subRoot->left,paths,temp);
+  getPaths(subRoot->right,paths,temp);
 }
 
 

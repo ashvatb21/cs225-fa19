@@ -138,6 +138,9 @@ class BinaryTree
         bool isOrderedRecursive() const;
 
 
+
+
+
         /**
          * creates vectors of all the possible paths from the root of the tree to any leaf
          * node and adds it to another vector.
@@ -232,6 +235,13 @@ class BinaryTree
          * @param treeVector stores nodes in order
          */
         void inOrder(Node *subRoot, std::vector<T>& treeVector);
+
+        //Helper Functions
+        bool isOrderedIterative(Node * root) const;
+
+        bool isOrderedRecursive(Node* subRoot, std::vector<T> & inOrder) const;
+
+        void getPaths(Node * subRoot, std::vector<std::vector<T>> & paths, std::vector<T> temp) const;
 };
 
 #include "binarytree_given.cpp"
