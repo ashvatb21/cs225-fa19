@@ -83,6 +83,132 @@ TEST_CASE("List::split simple", "[weight=5][part=1][valgrind]") {
     REQUIRE( "< 3 4 >" == s2.str() );
 }
 
+TEST_CASE("List::split simple 1", "[weight=5][part=1][valgrind]") {// My own test cases to test split edge cases
+    List<int> list;
+
+    list.insertBack(1);
+    list.insertBack(2);
+    list.insertBack(3);
+    list.insertBack(4);
+
+    List<int> slist = list.split(-23);
+    stringstream s1, s2;
+
+    list.print(s1);
+    slist.print(s2);
+
+    REQUIRE( "< >" == s1.str() );
+    REQUIRE( "< 1 2 3 4 >" == s2.str() );
+}
+
+TEST_CASE("List::split simple 2", "[weight=5][part=1][valgrind]") {// My own test cases to test split edge cases
+    List<int> list;
+
+    list.insertBack(1);
+    list.insertBack(2);
+    list.insertBack(3);
+    list.insertBack(4);
+
+    List<int> slist = list.split(-1);
+    stringstream s1, s2;
+
+    list.print(s1);
+    slist.print(s2);
+
+    REQUIRE( "< >" == s1.str() );
+    REQUIRE( "< 1 2 3 4 >" == s2.str() );
+}
+
+TEST_CASE("List::split simple 3", "[weight=5][part=1][valgrind]") {// My own test cases to test split edge cases
+    List<int> list;
+
+    list.insertBack(1);
+    list.insertBack(2);
+    list.insertBack(3);
+    list.insertBack(4);
+
+    List<int> slist = list.split(1);
+    stringstream s1, s2;
+
+    list.print(s1);
+    slist.print(s2);
+
+    REQUIRE( "< 1 >" == s1.str() );
+    REQUIRE( "< 2 3 4 >" == s2.str() );
+}
+
+TEST_CASE("List::split simple 4", "[weight=5][part=1][valgrind]") {// My own test cases to test split edge cases
+    List<int> list;
+
+    list.insertBack(1);
+    list.insertBack(2);
+    list.insertBack(3);
+    list.insertBack(4);
+
+    List<int> slist = list.split(3);
+    stringstream s1, s2;
+
+    list.print(s1);
+    slist.print(s2);
+
+    REQUIRE( "< 1 2 3 >" == s1.str() );
+    REQUIRE( "< 4 >" == s2.str() );
+}
+
+TEST_CASE("List::split simple 5", "[weight=5][part=1][valgrind]") {// My own test cases to test split edge cases
+    List<int> list;
+
+    list.insertBack(1);
+    list.insertBack(2);
+    list.insertBack(3);
+    list.insertBack(4);
+
+    List<int> slist = list.split(4);
+    stringstream s1, s2;
+
+    list.print(s1);
+    slist.print(s2);
+
+    REQUIRE( "< 1 2 3 4 >" == s1.str() );
+    REQUIRE( "< >" == s2.str() );
+}
+
+TEST_CASE("List::split simple 6", "[weight=5][part=1][valgrind]") {// My own test cases to test split edge cases
+    List<int> list;
+
+    list.insertBack(1);
+    list.insertBack(2);
+    list.insertBack(3);
+    list.insertBack(4);
+
+    List<int> slist = list.split(100);
+    stringstream s1, s2;
+
+    list.print(s1);
+    slist.print(s2);
+
+    REQUIRE( "< 1 2 3 4 >" == s1.str() );
+    REQUIRE( "< >" == s2.str() );
+}
+
+TEST_CASE("List::split simple 7", "[weight=5][part=1][valgrind]") {// My own test cases to test split edge cases
+    List<int> list;
+
+    list.insertBack(1);
+    list.insertBack(2);
+    list.insertBack(3);
+    list.insertBack(4);
+
+    List<int> slist = list.split(6);
+    stringstream s1, s2;
+
+    list.print(s1);
+    slist.print(s2);
+
+    REQUIRE( "< 1 2 3 4 >" == s1.str() );
+    REQUIRE( "< >" == s2.str() );
+}
+
 TEST_CASE("List::split images", "[weight=5][part=1]") {
 
     PNG in;         in.readFromFile("tests/split.png");
