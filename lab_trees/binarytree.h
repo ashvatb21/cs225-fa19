@@ -242,6 +242,7 @@ class BinaryTree
         bool isOrderedRecursive(Node* subRoot, std::vector<T> & inOrder) const;
 
         void getPaths(Node * subRoot, std::vector<std::vector<T>> & paths, std::vector<T> temp) const;
+        int sumDistances(Node *subRoot, int height) const;
 };
 
 #include "binarytree_given.cpp"
