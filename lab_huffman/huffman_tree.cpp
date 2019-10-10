@@ -132,13 +132,17 @@ void HuffmanTree::buildTree(const vector<Frequency>& frequencies)
        singleQueue.push(temp);
      }
 
+     int frequency1 = 0, frequency2 = 0;
+
      while ((singleQueue.size() + mergeQueue.size()) > 1){
        TreeNode* temp1 = removeSmallest(singleQueue, mergeQueue);
        TreeNode* temp2 = removeSmallest(singleQueue, mergeQueue);
-       TreeNode* root = new TreeNode(temp1->freq.getFrequency() + temp2->freq.getFrequency());
-       root->left = temp1;   //temp 1 is the smaller value
-       root->right = temp2;
-       mergeQueue.push(root);
+       frequency1 = temp1->freq.getFrequency();
+       frequency2 = temp2->freq.getFrequency();
+       TreeNode* internalNode = new TreeNode(frequency1 + frequency2);
+       internalNode->left = temp1;
+       internalNode->right = temp2;
+       mergeQueue.push(internalNode);
      }
 
      root_ = mergeQueue.front();
