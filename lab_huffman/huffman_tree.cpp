@@ -83,8 +83,26 @@ HuffmanTree::removeSmallest(queue<TreeNode*>& singleQueue,
      * smaller of the two queues heads is the smallest item in either of
      * the queues. Return this item after removing it from its queue.
      */
-    return NULL;
-}
+    TreeNode *smallest = NULL;
+    if (mergeQueue.size() == 0) {
+       smallest = singleQueue.front();
+       singleQueue.pop();
+     } else if (singleQueue.size() == 0) {
+       smallest = mergeQueue.front();
+       mergeQueue.pop();
+     } else if (singleQueue.front()->freq.getFrequency() < mergeQueue.front()->freq.getFrequency()) {
+       if (singleQueue.front() != NULL) {
+         smallest = singleQueue.front();
+         singleQueue.pop();
+       }
+     } else {
+       if (mergeQueue.front() != NULL) {
+         smallest = mergeQueue.front();
+         mergeQueue.pop();
+       }
+     }
+     return smallest;
+   }
 
 void HuffmanTree::buildTree(const vector<Frequency>& frequencies)
 {
@@ -108,6 +126,23 @@ void HuffmanTree::buildTree(const vector<Frequency>& frequencies)
      * Finally, when there is a single node left, it is the root. Assign it
      * to the root and you're done!
      */
+
+     for (unsigned int i = 0; i < frequencies.size(); i++){
+       TreeNode* temp = new TreeNode(frequencies[i]);
+       singleQueue.push(temp);
+     }
+
+     while ((singleQueue.size() + mergeQueue.size()) > 1){
+       TreeNode* temp1 = removeSmallest(singleQueue, mergeQueue);
+       TreeNode* temp2 = removeSmallest(singleQueue, mergeQueue);
+       TreeNode* root = new TreeNode(temp1->freq.getFrequency() + temp2->freq.getFrequency());
+       root->left = temp1;   //temp 1 is the smaller value
+       root->right = temp2;
+       mergeQueue.push(root);
+     }
+
+     root_ = mergeQueue.front();
+     mergeQueue.pop();
 
 }
 
