@@ -172,6 +172,18 @@ void HuffmanTree::decode(stringstream& ss, BinaryFileReader& bfile)
          * character to the stringstream (with operator<<, just like cout)
          * and start traversing from the root node again.
          */
+         bool binary = bfile.getNextBit();
+
+         if (binary) {
+           current = current->right;
+         } else {
+           current = current->left;
+         }
+
+         if (current->right == NULL && current->left == NULL) {
+           ss << current->freq.getCharacter();
+           current = root_;
+         }
     }
 }
 
