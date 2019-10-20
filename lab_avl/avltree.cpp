@@ -132,24 +132,44 @@ void AVLTree<K, V>::remove(const K& key)
 template <class K, class V>
 void AVLTree<K, V>::remove(Node*& subtree, const K& key)
 {
-    if (subtree == NULL)
-        return;
+  if (subtree == NULL)
+      return;
 
-    if (key < subtree->key) {
-        // your code here
-    } else if (key > subtree->key) {
-        // your code here
-    } else {
-        if (subtree->left == NULL && subtree->right == NULL) {
-            /* no-child remove */
-            // your code here
-        } else if (subtree->left != NULL && subtree->right != NULL) {
-            /* two-child remove */
-            // your code here
-        } else {
-            /* one-child remove */
-            // your code here
-        }
-        // your code here
-    }
+  if (key < subtree->key) {
+      // your code here
+      remove(subtree->left, key);
+  } else if (key > subtree->key) {
+      // your code here
+      remove(subtree->right, key);
+  } else {
+      if (subtree->left == NULL && subtree->right == NULL) {
+          /* no-child remove */
+          // your code here
+          delete subtree;
+          subtree = NULL;
+      } else if (subtree->left != NULL && subtree->right != NULL) {
+          /* two-child remove */
+          // your code here
+          Node* iop = subtree->left;
+          while (iop->right != NULL) {
+            iop = iop->right;
+          }
+          swap (iop, subtree);
+          remove (subtree->left, key);
+          rebalance (iop);
+      } else {
+          /* one-child remove */
+          // your code here
+          Node *child;
+         if (subtree->left != NULL) {
+           child = subtree->left;
+         } else {
+           child = subtree->right;
+         }
+         delete subtree;
+         subtree = child;
+      }
+      // your code here
+  }
+  rebalance(subtree);
 }
