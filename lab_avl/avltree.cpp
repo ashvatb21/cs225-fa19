@@ -30,6 +30,12 @@ void AVLTree<K, V>::rotateLeft(Node*& t)
 {
     functionCalls.push_back("rotateLeft"); // Stores the rotation name (don't remove this)
     // your code here
+    Node * temp = t->right;
+   t->right = temp->left;
+   temp->left = t;
+   t->height = 1 + max(heightOrNeg1(t->left), heightOrNeg1(t->right));
+   t = temp;
+   t->height = 1 + max(heightOrNeg1(t->left), heightOrNeg1(t->right));
 }
 
 template <class K, class V>
@@ -46,6 +52,12 @@ void AVLTree<K, V>::rotateRight(Node*& t)
 {
     functionCalls.push_back("rotateRight"); // Stores the rotation name (don't remove this)
     // your code here
+    Node * temp = t->left;
+    t->left = temp->right;
+    temp->right = t;
+    t->height = 1 + max(heightOrNeg1(t->left), heightOrNeg1(t->right));
+    t = temp;
+    t->height = 1 + max(heightOrNeg1(t->left), heightOrNeg1(t->right));
 }
 
 template <class K, class V>
@@ -53,6 +65,8 @@ void AVLTree<K, V>::rotateRightLeft(Node*& t)
 {
     functionCalls.push_back("rotateRightLeft"); // Stores the rotation name (don't remove this)
     // your code here
+    rotateRight(t->right);
+    rotateLeft(t);
 }
 
 template <class K, class V>
