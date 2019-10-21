@@ -62,6 +62,9 @@ ImageTraversal::Iterator DFS::end() {
  */
 void DFS::add(const Point & point) {
   /** @todo [Part 1] */
+
+  points.push_back(point);
+  return;
 }
 
 /**
@@ -69,7 +72,12 @@ void DFS::add(const Point & point) {
  */
 Point DFS::pop() {
   /** @todo [Part 1] */
-  return Point(0, 0);
+  if (points.empty()) {
+    return Point(-1, -1);
+  }
+  Point temp = points.back();
+  points.pop_back();
+  return temp;
 }
 
 /**
@@ -77,7 +85,12 @@ Point DFS::pop() {
  */
 Point DFS::peek() const {
   /** @todo [Part 1] */
-  return Point(0, 0);
+
+  if (points.empty()) {
+    return Point(-1, -1);
+  }
+  return points.back();
+
 }
 
 /**
@@ -85,5 +98,5 @@ Point DFS::peek() const {
  */
 bool DFS::empty() const {
   /** @todo [Part 1] */
-  return true;
+  return points.empty();
 }
