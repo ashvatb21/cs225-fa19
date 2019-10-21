@@ -33,6 +33,31 @@ double ImageTraversal::calculateDelta(const HSLAPixel & p1, const HSLAPixel & p2
  */
 ImageTraversal::Iterator::Iterator() {
   /** @todo [Part 1] */
+  traversal = NULL;
+  isEnd = false;
+}
+
+//My constructor
+ImageTraversal::Iterator::Iterator(PNG image, Point startPoint, double tolerance, ImageTraversal* traversal) {
+  /** @todo [Part 1] */
+  this->image = image;
+  this->startPoint = startPoint;
+  realStart = startPoint;
+  tolerance_ = tolerance;
+  this->traversal = traversal;
+
+  for (unsigned i = 0; i < image.width() * image.height(); i++) {
+    isVisited.push_back(false);
+  }
+
+  isEnd = false;
+
+  if (canBeVisited(startPoint)) {
+    isVisited[(startPoint.x) + (startPoint.y * image.width())] = true;
+    path.push_back(startPoint);
+  } else {
+    isEnd = true;
+  }
 }
 
 /**
@@ -42,6 +67,43 @@ ImageTraversal::Iterator::Iterator() {
  */
 ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
   /** @todo [Part 1] */
+
+  Point p1 = Point(startPoint.x + 1, startPoint.y);
+  Point p2 = Point(startPoint.x, startPoint.y + 1);
+  Point p3 = Point(startPoint.x - 1, startPoint.y);
+  Point p4 = Point(startPoint.x, startPoint.y - 1);
+
+  if (canBeVisited(p1)) {
+    traversal->add(p1);
+  }
+  if (canBeVisited(p2)) {
+    traversal->add(p2);
+  }
+  if (canBeVisited(p3)) {
+    traversal->add(p3);
+  }
+  if (canBeVisited(p4)) {
+    traversal->add(p4);
+  }
+  if (traversal->empty()) {
+    setEnd(true);
+    return *this;
+  }
+
+  Point point = traversal->pop();
+
+  while (isVisited[point.x + point.y * image.width()]) {
+    if (traversal->empty()) {
+      setEnd(true);
+      return *this;
+    }
+
+    point = traversal->pop();
+  }
+
+  startPoint = point;
+  isVisited[startPoint.x + startPoint.y * image.width()] = true;
+  path.push_back(startPoint);
   return *this;
 }
 
@@ -52,7 +114,7 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
  */
 Point ImageTraversal::Iterator::operator*() {
   /** @todo [Part 1] */
-  return Point(0, 0);
+  return startPoint;
 }
 
 /**
@@ -62,6 +124,24 @@ Point ImageTraversal::Iterator::operator*() {
  */
 bool ImageTraversal::Iterator::operator!=(const ImageTraversal::Iterator &other) {
   /** @todo [Part 1] */
-  return false;
+  return (isEnd != other.isEnd);
 }
 
+bool ImageTraversal::Iterator::canBeVisited(Point point) {
+  if (point.x >= image.width() || point.y >= image.height()) {
+    return false;
+  }
+
+  HSLAPixel start = (image.getPixel(realStart.x, realStart.y));
+  HSLAPixel desired = (image.getPixel(point.x, point.y));
+
+  if (calculateDelta(start, desired) >= tolerance_) {
+    return false;
+  }
+
+  return true;
+}
+
+void ImageTraversal::Iterator::setEnd(bool end){
+  isEnd = end;
+}

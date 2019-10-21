@@ -38,6 +38,5 @@ private:
   PNG image;
   Point startPoint;
   double tolerance_;
-  bool** visited;
-  std::list<Point> points;
+  std::stack<Point> points;
 };
