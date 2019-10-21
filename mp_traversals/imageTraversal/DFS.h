@@ -35,4 +35,9 @@ public:
 private:
 	/** @todo [Part 1] */
 	/** add private members here*/
+  PNG image;
+  Point startPoint;
+  double tolerance_;
+  bool** visited;
+  std::list<Point> points;
 };
