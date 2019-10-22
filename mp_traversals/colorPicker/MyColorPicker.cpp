@@ -10,7 +10,17 @@ using namespace cs225;
  * Picks the color for pixel (x, y).
  * Using your own algorithm
  */
+
 HSLAPixel MyColorPicker::getColor(unsigned x, unsigned y) {
   /* @todo [Part 3] */
-  return HSLAPixel();
+
+  double hue = 0 + (std::rand() % (359 + 1));
+  if (hue > 360) {
+    while (hue > 360) {
+      hue -= 360;
+    }
+  }
+
+  HSLAPixel pixel(hue, 0.8, 0.5);
+  return pixel;
 }
