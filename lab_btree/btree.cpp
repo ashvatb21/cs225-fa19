@@ -149,8 +149,8 @@ void BTree<K, V>::split_child(BTreeNode* parent, size_t child_idx)
     parent->elements.insert(elem_itr, *mid_elem_itr);
     parent->children.insert(child_itr, new_right);
 
-    new_right->elements.assign(mid_elem_itr+1, child->elements.end());
-    if (child->is_leaf != true) {
+   new_right->elements.assign(mid_elem_itr+1, child->elements.end());
+   if (child->is_leaf != true) {
      new_right->children.assign(mid_child_itr, child->children.end());
    }
 
@@ -182,4 +182,13 @@ void BTree<K, V>::insert(BTreeNode* subroot, const DataPair& pair)
     size_t first_larger_idx = insertion_idx(subroot->elements, pair);
 
     /* TODO Your code goes here! */
+    if (subroot->is_leaf) {
+      subroot->elements.insert(subroot->elements.begin() + first_larger_idx, pair);
+    } else {
+      insert(subroot->children[first_larger_idx], pair);
+      if (subroot->children[first_larger_idx]->elements.size() >= order) {
+        split_child(subroot, first_larger_idx);
+      }
+    }
+    return;
 }
