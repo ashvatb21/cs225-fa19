@@ -233,6 +233,12 @@ class KDTree
     Point<Dim> findNearestNeighbor(const Point<Dim>& query) const;
 
     // functions used for grading:
+    void build(vector<Point<Dim>>& newPoints, int left, int right, KDTreeNode*& subroot, int size_);
+
+    Point<Dim> select(vector<Point<Dim>>& newPoints_, int left, int right, size_t limit, int size_);
+
+    int partition(vector<Point<Dim>>& newPoints_, int left, int right, size_t pivotIndex, int size_);
+
 
     /**
      * You do not need to modify this function. Its implementation is in
@@ -242,6 +248,8 @@ class KDTree
     void printTree(ostream& out = cout,
                    colored_out::enable_t enable_bold = colored_out::COUT,
                    int modWidth = -1) const;
+
+
 
   private:
 
