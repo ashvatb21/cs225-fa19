@@ -28,7 +28,7 @@ bool KDTree<Dim>::smallerDimVal(const Point<Dim>& first,
 
 template <int Dim>
 bool KDTree<Dim>::shouldReplace(const Point<Dim>& target,
-                                const Point<Dim>& currentBest,
+                                const Point<Dim>& nearest,
                                 const Point<Dim>& potential) const
 {
     /**
@@ -38,7 +38,7 @@ bool KDTree<Dim>::shouldReplace(const Point<Dim>& target,
      double potential_dist = 0.0;
 
      for (unsigned i = 0; i < Dim; i++) {
-       current_dist += (currentBest[i] - target[i]) * (currentBest[i] - target[i]);
+       current_dist += (nearest[i] - target[i]) * (nearest[i] - target[i]);
        potential_dist += (potential[i] - target[i]) * (potential[i] - target[i]);
      }
 
@@ -47,7 +47,7 @@ bool KDTree<Dim>::shouldReplace(const Point<Dim>& target,
      } else if (potential_dist < current_dist) {
        return true;
      } else {
-       return potential < currentBest;
+       return potential < nearest;
      }
 }
 
@@ -171,7 +171,7 @@ void KDTree<Dim>::_destroy(KDTreeNode*& subroot) {
   if (subroot == NULL) {
     return;
   }
-  
+
   _destroy(subroot->left);
   _destroy(subroot->right);
   delete subroot;
@@ -183,6 +183,64 @@ Point<Dim> KDTree<Dim>::findNearestNeighbor(const Point<Dim>& query) const
     /**
      * @todo Implement this function!
      */
+     return findNearestNeighborHelper(root, query, 0);
+}
 
-     return Point<Dim>();
+template <int Dim>
+Point<Dim> KDTree<Dim>::findNearestNeighborHelper(KDTreeNode * subroot, const Point<Dim>& query, int dimensions) const {
+
+	Point<Dim> nearest = subroot->point;
+	bool flag;
+
+	if (subroot->left == NULL && subroot->right == NULL) {
+    return subroot->point;
+  }
+
+	if (smallerDimVal(query, subroot->point, dimensions)) {
+		if (subroot->left != NULL) {
+      nearest = findNearestNeighborHelper(subroot->left, query, (dimensions + 1) % Dim);
+    } else {
+      nearest = findNearestNeighborHelper(subroot->right, query, (dimensions + 1) % Dim);
+    }
+		flag = true;
+	} else {
+		if (subroot->right != NULL) {
+      nearest = findNearestNeighborHelper(subroot->right, query, (dimensions + 1) % Dim);
+    } else {
+      nearest = findNearestNeighborHelper(subroot->left, query, (dimensions + 1) % Dim);
+    }
+		flag = false;
+	}
+
+	if (shouldReplace(query, nearest, subroot->point)) {
+    nearest = subroot->point;
+  }
+
+	double distance = 0;
+	for (int i = 0; i < Dim; i++) {
+		distance += (nearest[i] - query[i]) * (nearest[i] - query[i]);
+	}
+
+	double split_distance = (subroot->point[dimensions] - query[dimensions])*(subroot->point[dimensions] - query[dimensions]);
+
+	if (split_distance <= distance) {
+
+    KDTreeNode * traverse = NULL;
+
+    if (!flag) {
+      traverse = subroot->left;
+    } else {
+      traverse = subroot->right;
+    }
+
+		if (traverse != NULL) {
+
+			Point<Dim> otherNearest = findNearestNeighborHelper(traverse, query, (dimensions + 1) % Dim);
+
+			if (shouldReplace(query, nearest, otherNearest)) {
+        nearest = otherNearest;
+      }
+		}
+	}
+	return nearest;
 }

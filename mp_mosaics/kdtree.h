@@ -233,14 +233,17 @@ class KDTree
     Point<Dim> findNearestNeighbor(const Point<Dim>& query) const;
 
     // functions used for grading:
-    void build(vector<Point<Dim>>& newPoints, int left, int right, KDTreeNode*& subroot, int size_);
+    void build(vector<Point<Dim>>& newPoints, int left, int right, KDTreeNode*& subroot, int dimensions);
 
-    Point<Dim> select(vector<Point<Dim>>& newPoints_, int left, int right, size_t limit, int size_);
+    Point<Dim> select(vector<Point<Dim>>& newPoints_, int left, int right, size_t limit, int dimensions);
 
-    int partition(vector<Point<Dim>>& newPoints_, int left, int right, size_t pivotIndex, int size_);
+    int partition(vector<Point<Dim>>& newPoints_, int left, int right, size_t pivotIndex, int dimensions);
 
     void _copy(KDTreeNode*& current, KDTreeNode*& other);
+
     void _destroy(KDTreeNode*& subroot);
+
+    Point<Dim> findNearestNeighborHelper(KDTreeNode * subroot, const Point<Dim>& query, int dimensions) const;
 
 
     /**
