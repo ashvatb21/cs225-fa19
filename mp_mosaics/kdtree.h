@@ -239,6 +239,9 @@ class KDTree
 
     int partition(vector<Point<Dim>>& newPoints_, int left, int right, size_t pivotIndex, int size_);
 
+    void _copy(KDTreeNode*& current, KDTreeNode*& other);
+    void _destroy(KDTreeNode*& subroot);
+
 
     /**
      * You do not need to modify this function. Its implementation is in

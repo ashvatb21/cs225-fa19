@@ -117,7 +117,7 @@ int KDTree<Dim>::partition(vector<Point<Dim>>& newPoints_, int left, int right, 
 
   size_t index = left;
 
-  for (unsigned i = left; i < right; i++) {
+  for (int i = left; i < right; i++) {
     if (smallerDimVal(newPoints_[i], pivot, size_) == true) {
       swap(newPoints_[index], newPoints_[i]);
       index++;
@@ -133,6 +133,7 @@ KDTree<Dim>::KDTree(const KDTree<Dim>& other) {
   /**
    * @todo Implement this function!
    */
+   _copy(root, other->root);
 }
 
 template <int Dim>
@@ -140,8 +141,9 @@ const KDTree<Dim>& KDTree<Dim>::operator=(const KDTree<Dim>& rhs) {
   /**
    * @todo Implement this function!
    */
-
-  return *this;
+   _destroy(root);
+   _copy(root, rhs->root);
+   return *this;
 }
 
 template <int Dim>
@@ -149,6 +151,30 @@ KDTree<Dim>::~KDTree() {
   /**
    * @todo Implement this function!
    */
+   _destroy(root);
+}
+
+template <int Dim>
+void KDTree<Dim>::_copy(KDTreeNode*& current, KDTreeNode*& other) {
+
+  if (other == NULL) {
+    return;
+  }
+
+  current = new KDTreeNode(other->point);
+  _copy(current->left, other->left);
+  _copy(current->right, other->right);
+}
+
+template <int Dim>
+void KDTree<Dim>::_destroy(KDTreeNode*& subroot) {
+  if (subroot == NULL) {
+    return;
+  }
+  
+  _destroy(subroot->left);
+  _destroy(subroot->right);
+  delete subroot;
 }
 
 template <int Dim>
