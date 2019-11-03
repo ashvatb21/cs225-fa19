@@ -81,8 +81,22 @@ void DHHashTable<K, V>::insert(K const& key, V const& value)
      *  forget to mark the cell for probing with should_probe!
      */
 
-    (void) key;   // prevent warnings... When you implement this function, remove this line.
-    (void) value; // prevent warnings... When you implement this function, remove this line.
+     elems++;
+     if (shouldResize())
+         resizeTable();
+
+     size_t idx = hashes::hash(key, size);
+     size_t idx2 = hashes::secondary_hash(key, size);
+     while(should_probe[idx]){
+       idx = (idx + idx2) % size;
+     }
+
+
+     table[idx] = new std::pair<K,V>(key, value);
+     should_probe[idx] = true;
+
+    //(void) key;   // prevent warnings... When you implement this function, remove this line.
+    //(void) value; // prevent warnings... When you implement this function, remove this line.
 }
 
 template <class K, class V>
@@ -91,6 +105,14 @@ void DHHashTable<K, V>::remove(K const& key)
     /**
      * @todo Implement this function
      */
+
+     int idx = findIndex(key);
+
+     if (idx != -1) {
+       delete table[idx];
+       -- elems;
+       table[idx] = NULL;
+     }
 }
 
 template <class K, class V>
@@ -99,7 +121,24 @@ int DHHashTable<K, V>::findIndex(const K& key) const
     /**
      * @todo Implement this function
      */
-    return -1;
+
+     int idx = hashes::hash(key, size);
+     int idx2 = hashes::secondary_hash(key, size);
+     int temp = idx;
+
+     while (should_probe[idx]) {
+
+        if (table[idx] != NULL && table[idx]->first == key) {
+          return idx;
+        }
+
+        idx = (idx + idx2) % size;
+        if (idx == temp) {
+            break;
+        }
+     }
+     
+     return -1;
 }
 
 template <class K, class V>
@@ -160,7 +199,7 @@ void DHHashTable<K, V>::resizeTable()
             size_t h = hashes::hash(table[slot]->first, newSize);
             size_t jump = hashes::secondary_hash(table[slot]->first, newSize);
             size_t i = 0;
-            size_t idx = h; 
+            size_t idx = h;
             while (temp[idx] != NULL)
             {
                 ++i;

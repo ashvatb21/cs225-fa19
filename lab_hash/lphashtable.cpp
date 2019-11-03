@@ -105,11 +105,12 @@ void LPHashTable<K, V>::remove(K const& key)
      */
 
      int idx = findIndex(key);
-     if (idx != -1) {
+     if (idx >= -1) {
        delete table[idx];
        -- elems;
        table[idx] = NULL;
-     }
+
+    }
 }
 
 template <class K, class V>
@@ -122,11 +123,11 @@ int LPHashTable<K, V>::findIndex(const K& key) const
      * Be careful in determining when the key is not in the table!
      */
 
-    size_t idx = hashes::hash(key, size);
-    size_t temp = idx;
+    int idx = hashes::hash(key, size);
+    int temp = idx;
     while (should_probe[idx]) {
 
-        if (table[idx]->first == key && table[idx] != NULL){
+        if (table[idx] != NULL && table[idx]->first == key) {
           return idx;
         }
 
