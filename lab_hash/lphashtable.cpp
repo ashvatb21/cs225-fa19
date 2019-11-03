@@ -80,8 +80,21 @@ void LPHashTable<K, V>::insert(K const& key, V const& value)
      * Also, don't forget to mark the cell for probing with should_probe!
      */
 
-    (void) key;   // prevent warnings... When you implement this function, remove this line.
-    (void) value; // prevent warnings... When you implement this function, remove this line.
+     elems++;
+
+     if (shouldResize())
+         resizeTable();
+
+     size_t idx = hashes::hash(key, size);
+     while (should_probe[idx]) {
+       idx = (idx + 1) % size;
+     }
+
+     table[idx] = new std::pair<K,V>(key, value);
+     should_probe[idx] = true;
+
+    //(void) key;   // prevent warnings... When you implement this function, remove this line.
+    //(void) value; // prevent warnings... When you implement this function, remove this line.
 }
 
 template <class K, class V>
@@ -90,6 +103,13 @@ void LPHashTable<K, V>::remove(K const& key)
     /**
      * @todo: implement this function
      */
+
+     int idx = findIndex(key);
+     if (idx != -1) {
+       delete table[idx];
+       -- elems;
+       table[idx] = NULL;
+     }
 }
 
 template <class K, class V>
@@ -101,6 +121,21 @@ int LPHashTable<K, V>::findIndex(const K& key) const
      *
      * Be careful in determining when the key is not in the table!
      */
+
+    size_t idx = hashes::hash(key, size);
+    size_t temp = idx;
+    while (should_probe[idx]) {
+
+        if (table[idx]->first == key && table[idx] != NULL){
+          return idx;
+        }
+
+        idx = (idx + 1) % size;
+        if (idx == temp) {
+            break;
+
+        }
+    }
 
     return -1;
 }
@@ -159,4 +194,32 @@ void LPHashTable<K, V>::resizeTable()
      *
      * @hint Use findPrime()!
      */
+
+     size_t prime = findPrime(size * 2);
+     std::pair<K,V>** newTable = new std::pair<K,V>*[prime];
+
+     delete[] should_probe;
+
+     should_probe = new bool[prime];
+     for (size_t i = 0; i < prime; i++) {
+         newTable[i] = NULL;
+         should_probe[i] = false;
+     }
+
+    for (size_t i = 0; i < size; i++) {
+        if (table[i] != NULL) {
+            size_t idx = hashes::hash(table[i]->first, prime);
+
+            while (should_probe[idx]) {
+              idx = (idx + 1) % prime;
+            }
+
+            newTable[idx] = table[i];
+            should_probe[idx] = true;
+        }
+    }
+
+    size = prime;
+    delete[] table;
+    table = newTable;
 }

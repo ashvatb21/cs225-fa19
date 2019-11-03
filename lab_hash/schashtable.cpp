@@ -61,9 +61,9 @@ void SCHashTable<K, V>::insert(K const& key, V const& value)
        resizeTable();
      }
 
-     size_t x = hashes::hash(key, size);
+     size_t idx = hashes::hash(key, size);
      std::pair<K, V> p(key, value);
-     table[x].push_front(p);
+     table[idx].push_front(p);
 }
 
 template <class K, class V>
@@ -77,10 +77,10 @@ void SCHashTable<K, V>::remove(K const& key)
      * erase() function on std::list!
      */
 
-     size_t x = hashes::hash(key, size);
-     for (it = table[x].begin(); it != table[x].end(); it++){
+     size_t idx = hashes::hash(key, size);
+     for (it = table[idx].begin(); it != table[idx].end(); it++){
        if (it->first == key) {
-         table[x].erase(it);
+         table[idx].erase(it);
          break;
        }
      }
@@ -95,11 +95,11 @@ V SCHashTable<K, V>::find(K const& key) const
      * @todo: Implement this function.
      */
 
-     size_t x = hashes::hash(key, size);
+     size_t idx = hashes::hash(key, size);
 
      typename std::list<std::pair<K, V>>::iterator it;
 
-     for (it = table[x].begin(); it != table[x].end(); it++) {
+     for (it = table[idx].begin(); it != table[idx].end(); it++) {
          if (it->first == key)
              return it->second;
      }
@@ -168,9 +168,9 @@ void SCHashTable<K, V>::resizeTable()
 
     for (size_t i = 0; i < size; i++) {
       for (it = table[i].begin(); it != table[i].end(); it++) {
-        size_t x = hashes::hash(it->first, prime);
+        size_t idx = hashes::hash(it->first, prime);
         std::pair<K, V> p(it->first, it->second);
-        newTable[x].push_front(p);
+        newTable[idx].push_front(p);
       }
     }
 
