@@ -86,7 +86,7 @@ void heap<T, Compare>::heapifyUp(size_t currentIdx)
     }
 
     size_t parentIdx = parent(currentIdx);
-    
+
     if (higherPriority(_elems[currentIdx], _elems[parentIdx])) {
         std::swap(_elems[currentIdx], _elems[parentIdx]);
         heapifyUp(parentIdx);
@@ -125,8 +125,9 @@ T heap<T, Compare>::pop()
       _elems.pop_back();
       heapifyDown(1);
       return temp;
+    } else {
+      return T();
     }
-    return T();
 
 }
 
@@ -162,7 +163,7 @@ template <class T, class Compare>
 bool heap<T, Compare>::empty() const
 {
     // @TODO Determine if the heap is empty
-    return _elems.size() == 1;
+    return _elems.size() <= 1;
 }
 
 template <class T, class Compare>
