@@ -3,6 +3,7 @@
 #include "dsets.h"
 using namespace std;
 
+//Add elements to array
 void DisjointSets::addelements(int num) {
   for (int i = 1; i <= num; i++) {
     elements.push_back(-1);
@@ -10,14 +11,19 @@ void DisjointSets::addelements(int num) {
   return;
 }
 
-int DisjointSets::find(int elem){
-  return 1;
+int DisjointSets::find(int elem) {
+  if (elements[elem] < 0) {
+    return elem;
+  } else {
+    elements[elem] = find(elements[elem]);
+    return elements[elem];
+  }
 }
 
-void DisjointSets::setunion(int a, int b){
+void DisjointSets::setunion(int a, int b) {
 
 }
 
-int DisjointSets::size(int elem){
+int DisjointSets::size(int elem) {
   return 1;
 }
