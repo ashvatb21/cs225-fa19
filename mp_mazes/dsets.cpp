@@ -21,6 +21,20 @@ int DisjointSets::find(int elem) {
 }
 
 void DisjointSets::setunion(int a, int b) {
+  a = find(a);
+  b = find(b);
+
+  if (a == b) {
+    return;
+  }
+
+  if (elements[a] < elements[b]) {
+    elements[a] = elements[a] + elements[b];
+    elements[b] = a;
+  } else {
+    elements[b] = elements[a] + elements[b];
+    elements[a] = b;
+  }
 
 }
 
