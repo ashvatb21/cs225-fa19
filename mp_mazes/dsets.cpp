@@ -39,5 +39,5 @@ void DisjointSets::setunion(int a, int b) {
 }
 
 int DisjointSets::size(int elem) {
-  return 1;
+  return -1 * elements[find(elem)];
 }
