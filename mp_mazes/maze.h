@@ -21,6 +21,8 @@ public:
 private:
   int width_;
   int height_;
+  int size;
+  DisjointSets dsets;
   vector<bool> downWalls;
   vector<bool> rightWalls;
 };

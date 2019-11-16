@@ -11,7 +11,8 @@ SquareMaze::SquareMaze() {
 void SquareMaze::makeMaze(int width, int height) {
   width_ = width;
   height_ = height;
-  int size = width * height;
+  size = width * height;
+  dsets.addelements(size);
   for (int i = 0; i < size; i++) {
     downWalls.push_back(true);
     rightWalls.push_back(true);
