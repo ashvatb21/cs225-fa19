@@ -13,9 +13,25 @@ void SquareMaze::makeMaze(int width, int height) {
   height_ = height;
   size = width * height;
   dsets.addelements(size);
+
   for (int i = 0; i < size; i++) {
     downWalls.push_back(true);
     rightWalls.push_back(true);
+  }
+
+  while (dsets.size(0) < size) {
+
+    int x = rand() % width_;
+    int y = rand() % height_;
+
+    if (rand() % 2 != 1) {
+      if (y != height_ - 1) {
+        if (dsets.find(y * width_ + x) != dsets.find(y * width_ + x + width_)) {
+          setWall(x, y, 1, false);
+            dsets.setunion(y * width_ + x, y * width_ + x + width_);
+        }
+      }
+    } 
   }
 }
 
@@ -24,7 +40,11 @@ bool SquareMaze::canTravel(int x, int y, int dir) const {
 }
 
 void SquareMaze::setWall(int x, int y, int dir, bool exists) {
-
+  if (dir == 0) {
+    rightWalls[y * width_ + x] = exists;
+  } else if (dir == 1) {
+    downWalls[y * width_ + x] = exists;
+  }
 }
 
 
