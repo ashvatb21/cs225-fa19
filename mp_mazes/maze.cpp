@@ -9,7 +9,13 @@ SquareMaze::SquareMaze() {
 }
 
 void SquareMaze::makeMaze(int width, int height) {
-
+  width_ = width;
+  height_ = height;
+  int size = width * height;
+  for (int i = 0; i < size; i++) {
+    downWalls.push_back(true);
+    rightWalls.push_back(true);
+  }
 }
 
 bool SquareMaze::canTravel(int x, int y, int dir) const {

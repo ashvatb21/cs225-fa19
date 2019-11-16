@@ -17,4 +17,10 @@ public:
   PNG* drawMaze() const;
   PNG* drawMazeWithSolution();
   PNG* drawCreativeMaze();
+
+private:
+  int width_;
+  int height_;
+  vector<bool> downWalls;
+  vector<bool> rightWalls;
 };
