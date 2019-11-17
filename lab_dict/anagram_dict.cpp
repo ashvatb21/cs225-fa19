@@ -23,6 +23,15 @@ using std::ifstream;
 AnagramDict::AnagramDict(const string& filename)
 {
     /* Your code goes here! */
+    ifstream wordsFile(filename);
+    string word;
+    if (wordsFile.is_open()) {
+      while (getline(wordsFile, word)) {
+        string s = word;
+        std::sort(s.begin(), s.end());
+        dict[s].push_back(word);
+      }
+    }
 }
 
 /**
@@ -32,6 +41,11 @@ AnagramDict::AnagramDict(const string& filename)
 AnagramDict::AnagramDict(const vector<string>& words)
 {
     /* Your code goes here! */
+    for (string word: words) {
+      string s = word;
+      std::sort(s.begin(), s.end());
+      dict[s].push_back(word);
+    }
 }
 
 /**
