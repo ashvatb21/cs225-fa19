@@ -57,7 +57,14 @@ AnagramDict::AnagramDict(const vector<string>& words)
 vector<string> AnagramDict::get_anagrams(const string& word) const
 {
     /* Your code goes here! */
-    return vector<string>();
+    string s = word;
+    std::sort(s.begin(), s.end());
+
+    if (dict.count(s) == 0) {
+      return vector<string>();
+    } else {
+      return dict.at(s);
+    }
 }
 
 /**
@@ -69,5 +76,11 @@ vector<string> AnagramDict::get_anagrams(const string& word) const
 vector<vector<string>> AnagramDict::get_all_anagrams() const
 {
     /* Your code goes here! */
-    return vector<vector<string>>();
+    vector<vector<string>> all_anagrams;
+    for (std::pair<std::string, std::vector<std::string>> key_val : dict) {
+      if (key_val.second.size() > 1) {
+        all_anagrams.push_back(key_val.second);
+      }
+    }
+    return all_anagrams;
 }
