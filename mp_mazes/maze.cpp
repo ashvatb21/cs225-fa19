@@ -205,7 +205,67 @@ PNG* SquareMaze::drawMaze() const{
 
 
 PNG* SquareMaze::drawMazeWithSolution(){
-  PNG* maze = new PNG();
+  PNG* maze = drawMaze();
+  vector<int> solved = solveMaze();
+  int x = 5;
+  int y = 5;
+
+  int final_x = destination % width_;
+  int final_y = destination / height_;
+
+  for (int i = 1; i < 10; i++) {
+    HSLAPixel & pixel = maze->getPixel(final_x * 10 + i, (final_y + 1) * 10);
+    pixel.l = 1;
+  }
+
+  for (size_t i = 0; i < solved.size(); i++) {
+    if (solved[i] == 0) {
+      for(int j = 0; j <= 10; j++){
+        HSLAPixel & pixel = maze->getPixel(x + j, y);
+        pixel.h = 0;
+        pixel.s = 1;
+        pixel.l = 0.5;
+        pixel.a = 1;
+      }
+
+      x = x + 10;
+
+    } else if (solved[i] == 1) {
+      for (int j = 0; j <= 10; j++) {
+        HSLAPixel & pixel = maze->getPixel(x, y + j);
+        pixel.h = 0;
+        pixel.s = 1;
+        pixel.l = 0.5;
+        pixel.a = 1;
+      }
+
+        y = y + 10;
+
+    } else if (solved[i] == 2) {
+      for (int j = 0; j <= 10; j++) {
+        HSLAPixel & pixel = maze->getPixel(x - j, y);
+        pixel.h = 0;
+        pixel.s = 1;
+        pixel.l = 0.5;
+        pixel.a = 1;
+      }
+
+        x = x - 10;
+
+    } else if (solved[i] == 3) {
+      for(int j = 0; j <= 10; j++){
+        HSLAPixel & pixel = maze->getPixel(x, y - j);
+        pixel.h = 0;
+        pixel.s = 1;
+        pixel.l = 0.5;
+        pixel.a = 1;
+      }
+
+        y = y - 10;
+
+    }
+  }
+  
   return maze;
 }
 
