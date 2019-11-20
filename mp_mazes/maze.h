@@ -17,6 +17,7 @@ public:
   PNG* drawMaze() const;
   PNG* drawMazeWithSolution();
   PNG* drawCreativeMaze();
+  PNG* drawCreativeMazeWithSolution();
 
 private:
   int width_;

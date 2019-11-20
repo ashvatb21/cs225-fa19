@@ -265,11 +265,145 @@ PNG* SquareMaze::drawMazeWithSolution(){
 
     }
   }
-  
+
   return maze;
 }
 
 PNG* SquareMaze::drawCreativeMaze(){
-  PNG* maze = new PNG();
+
+  int new_width = width_ * 10 + 1;
+  int new_height = height_ * 10 + 1;
+
+  PNG * maze = new PNG(new_width, new_height);
+
+  for (int x = 10; x < new_width; x++) {
+    HSLAPixel & pixel = maze->getPixel(x, 0);
+    pixel.l = 0;
+  }
+
+  for (int y = 0; y < new_height; y++) {
+    HSLAPixel & pixel = maze->getPixel(0, y);
+    pixel.l = 0;
+  }
+
+  for (int x = 0; x < width_ * 0.25; x++) {
+    setWall(x, height_ * 0.25, 1, true);
+  }
+
+  for (int x = width_ * 0.75; x < width_; x++) {
+    setWall(x, height_ * 0.25, 1, true);
+  }
+
+
+  for (int x = 0; x < width_ * 0.25; x++) {
+    setWall(x, height_ * 0.75 - 1, 1, true);
+  }
+
+  for (int x = width_ * 0.75; x < width_; x++) {
+    setWall(x, height_ * 0.75 - 1, 1, true);
+  }
+
+  for (int y = height_ * 0.25; y < height_ * 0.75; y++) {
+    setWall(width_ * 0.25 - 1, y, 0, true);
+  }
+
+
+  for (int y = height_ * 0.25; y < height_ * 0.75; y++) {
+    setWall(width_ * 0.75, y, 0, true);
+  }
+
+  for (int x = 0; x < width_; x++) {
+    for (int y = 0; y < height_; y++) {
+      if (!((y > height_ * 0.25 && y < height_ * 0.75 && x < width_ * 0.25) || (y > height_* 0.25 && y < height_ * 0.75 && x > width_ * 0.75))) {
+        if (rightWalls[x + y * width_]) {
+          for (int i = 0; i <= 10; i++) {
+            HSLAPixel & pixel = maze->getPixel(10 * x + 10, 10 * y + i);
+            pixel.h = 0;
+            pixel.s = 1;
+            pixel.l = 0.5;
+            pixel.a = 1;
+          }
+        }
+
+        if (downWalls[x + y * width_]) {
+          for (int i = 0; i <= 10; i++) {
+            HSLAPixel & pixel = maze->getPixel(10 * x + i, 10 * y + 10);
+            pixel.h = 0;
+            pixel.s = 0;
+            pixel.l = 0;
+            pixel.a = 0;
+          }
+        }
+      }
+    }
+  }
+
+  return maze;
+}
+
+PNG* SquareMaze::drawCreativeMazeWithSolution()
+{
+  PNG * maze = drawCreativeMaze();
+  vector<int> solved = solveMaze();
+
+  int x = 5;
+  int y = 5;
+
+  int final_x = destination % width_;
+  int final_y = destination / height_;
+
+  for (int i = 1; i < 10; i++) {
+    HSLAPixel & pixel = maze->getPixel(final_x * 10 + i, (final_y + 1) * 10);
+    pixel.l = 1;
+  }
+
+  for (size_t i = 0; i < solved.size(); i++) {
+    if (solved[i] == 0) {
+      for(int j = 0; j <= 10; j++){
+        HSLAPixel & pixel = maze->getPixel(x + j, y);
+        pixel.h = 130;
+        pixel.s = 1;
+        pixel.l = 0.5;
+        pixel.a = 1;
+      }
+
+      x = x + 10;
+
+    } else if (solved[i] == 1) {
+      for (int j = 0; j <= 10; j++) {
+        HSLAPixel & pixel = maze->getPixel(x, y + j);
+        pixel.h = 130;
+        pixel.s = 1;
+        pixel.l = 0.5;
+        pixel.a = 1;
+      }
+
+        y = y + 10;
+
+    } else if (solved[i] == 2) {
+      for (int j = 0; j <= 10; j++) {
+        HSLAPixel & pixel = maze->getPixel(x - j, y);
+        pixel.h = 130;
+        pixel.s = 1;
+        pixel.l = 0.5;
+        pixel.a = 1;
+      }
+
+        x = x - 10;
+
+    } else if (solved[i] == 3) {
+      for(int j = 0; j <= 10; j++){
+        HSLAPixel & pixel = maze->getPixel(x, y - j);
+        pixel.h = 130;
+        pixel.s = 1;
+        pixel.l = 0.5;
+        pixel.a = 1;
+      }
+
+        y = y - 10;
+
+    }
+  }
+
   return maze;
 }
