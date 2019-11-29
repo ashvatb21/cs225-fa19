@@ -69,7 +69,7 @@ std::vector<Edge> NimLearner::playRandomGame() const {
 
   Vertex current = startingVertex_;
   Vertex next;
-  
+
   while (current != "p1-0" && current != "p2-0") {
     std::vector<Vertex> v = g_.getAdjacent(current);
     unsigned size = v.size();
@@ -99,6 +99,19 @@ std::vector<Edge> NimLearner::playRandomGame() const {
  */
 void NimLearner::updateEdgeWeights(const std::vector<Edge> & path) {
  /* Your code goes here! */
+
+ string winner = path.back().source.substr(1,2);
+
+ for (Edge i : path) {
+   int weight = i.getWeight();
+
+   if (i.source.substr(1,2) == winner) {
+     g_.setEdgeWeight(i.source, i.dest, weight + 1);
+   } else {
+     g_.setEdgeWeight(i.source, i.dest, weight - 1);
+   }
+ }
+
 }
 
 /**
