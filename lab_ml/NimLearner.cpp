@@ -12,7 +12,7 @@
  *
  * This function creates a graph, `g_` representing all of the states of a
  * game of Nim with vertex labels "p#-X", where:
- * - # is the current player's turn; p1 for Player 1, p2 for Player2
+ * - # is the currententent player's turn; p1 for Player 1, p2 for Player2
  * - X is the tokens remaining at the start of a player's turn
  *
  * For example:
@@ -50,6 +50,8 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
         g_.setEdgeWeight("p2-" + to_string(i), "p1-"+to_string(i - 2), 0);
       }
     }
+
+    startingVertex_ = "p1-"+to_string(startingTokens_);
 }
 
 /**
@@ -63,7 +65,19 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
  */
 std::vector<Edge> NimLearner::playRandomGame() const {
   vector<Edge> path;
- /* Your code goes here! */
+  /* Your code goes here! */
+
+  Vertex current = startingVertex_;
+  Vertex next;
+  
+  while (current != "p1-0" && current != "p2-0") {
+    std::vector<Vertex> v = g_.getAdjacent(current);
+    unsigned size = v.size();
+    next = v[rand() % size];
+    path.push_back(g_.getEdge(current, next));
+    current = next;
+  }
+
   return path;
 }
 
