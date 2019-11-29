@@ -28,7 +28,7 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
     /* Your code goes here! */
     startingTokens_ = startingTokens;
 
-    for (unsigned i = 0; i <= startingTokens; i++) {
+    for (unsigned i = 0; i <= startingTokens_; i++) {
       g_.insertVertex("p1-" + to_string(i));
       g_.insertVertex("p2-" + to_string(i));
 
