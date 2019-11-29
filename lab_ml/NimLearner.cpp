@@ -26,6 +26,30 @@
  */
 NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
     /* Your code goes here! */
+    startingTokens_ = startingTokens;
+
+    for (unsigned i = 0; i <= startingTokens; i++) {
+      g_.insertVertex("p1-" + to_string(i));
+      g_.insertVertex("p2-" + to_string(i));
+
+      if (i == 1) {
+        g_.insertEdge("p1-" + to_string(i),"p2-0");
+        g_.insertEdge("p2-" + to_string(i),"p1-0");
+
+        g_.setEdgeWeight("p1-" + to_string(i),"p2-0", 0);
+        g_.setEdgeWeight("p2-" + to_string(i),"p1-0", 0);
+      } else {
+        g_.insertEdge("p1-" + to_string(i), "p2-"+to_string(i - 1));
+        g_.insertEdge("p2-" + to_string(i), "p1-"+to_string(i - 1));
+        g_.insertEdge("p1-" + to_string(i), "p2-"+to_string(i - 2));
+        g_.insertEdge("p2-" + to_string(i), "p1-"+to_string(i - 2));
+
+        g_.setEdgeWeight("p1-" + to_string(i), "p2-"+to_string(i - 1), 0);
+        g_.setEdgeWeight("p2-" + to_string(i), "p1-"+to_string(i - 1), 0);
+        g_.setEdgeWeight("p1-" + to_string(i), "p2-"+to_string(i - 2), 0);
+        g_.setEdgeWeight("p2-" + to_string(i), "p1-"+to_string(i - 2), 0);
+      }
+    }
 }
 
 /**
