@@ -22,6 +22,21 @@ NetworkFlow::NetworkFlow(Graph & startingGraph, Vertex source, Vertex sink) :
   g_(startingGraph), residual_(Graph(true,true)), flow_(Graph(true,true)), source_(source), sink_(sink) {
 
   // YOUR CODE HERE
+  vector<Vertex> vertex = g_.getVertices();
+  for (auto & v : vertex) {
+    flow_.insertVertex(v);
+    residual_.insertVertex(v);
+  }
+
+  vector<Edge> edge = g_.getEdges();
+  for (auto & e : edge) {
+    residual_.insertEdge(e.source, e.dest);
+    residual_.setEdgeWeight(e.source, e.dest, e.getWeight());
+    residual_.insertEdge(e.dest, e.source);
+    residual_.setEdgeWeight(e.dest, e.source, 0);
+    flow_.insertEdge(e.source, e.dest);
+    flow_.setEdgeWeight(e.source, e.dest, 0);
+  }
 }
 
   /**
@@ -34,7 +49,7 @@ NetworkFlow::NetworkFlow(Graph & startingGraph, Vertex source, Vertex sink) :
    * @param visited A set of vertices we have visited
    */
 
-bool NetworkFlow::findAugmentingPath(Vertex source, Vertex sink, 
+bool NetworkFlow::findAugmentingPath(Vertex source, Vertex sink,
   std::vector<Vertex> &path, std::set<Vertex> &visited) {
 
   if (visited.count(source) != 0)
@@ -115,4 +130,3 @@ const Graph & NetworkFlow::getFlowGraph() const {
 const Graph & NetworkFlow::getResidualGraph() const {
   return residual_;
 }
-
