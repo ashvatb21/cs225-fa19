@@ -37,6 +37,8 @@ NetworkFlow::NetworkFlow(Graph & startingGraph, Vertex source, Vertex sink) :
     flow_.insertEdge(e.source, e.dest);
     flow_.setEdgeWeight(e.source, e.dest, 0);
   }
+
+  maxFlow_ = 0;
 }
 
   /**
@@ -99,7 +101,19 @@ bool NetworkFlow::findAugmentingPath(Vertex source, Vertex sink, std::vector<Ver
 
 int NetworkFlow::pathCapacity(const std::vector<Vertex> & path) const {
   // YOUR CODE HERE
-  return 0;
+
+  Edge edge = residual_.getEdge(path[0], path[1]);
+  int min_weight = edge.getWeight();
+
+  for (unsigned i = 0; i < path.size() - 1; i++) {
+    Edge edge2 = residual_.getEdge(path[i], path[i + 1]);
+    int weight = edge2.getWeight();
+    if (weight < min_weight) {
+      min_weight = weight;
+    }
+  }
+
+  return min_weight;
 }
 
   /**
