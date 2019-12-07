@@ -11,7 +11,7 @@
 template <class V, class E>
 unsigned int Graph<V,E>::numVertices() const {
   // TODO: Part 2
-  return 0;
+  return vertexMap.size();
 }
 
 
@@ -23,7 +23,8 @@ unsigned int Graph<V,E>::numVertices() const {
 template <class V, class E>
 unsigned int Graph<V,E>::degree(const V & v) const {
   // TODO: Part 2
-  return 0;
+  std::list<edgeListIter> temp = adjList.at(v.key());
+  return temp.size();
 }
 
 
@@ -36,6 +37,8 @@ template <class V, class E>
 V & Graph<V,E>::insertVertex(std::string key) {
   // TODO: Part 2
   V & v = *(new V(key));
+  vertexMap.insert({key,v});
+  adjList.insert({key,std::list<edgeListIter>(0)});
   return v;
 }
 
@@ -47,6 +50,11 @@ V & Graph<V,E>::insertVertex(std::string key) {
 template <class V, class E>
 void Graph<V,E>::removeVertex(const std::string & key) {
   // TODO: Part 2
+  for (edgeListIter e : adjList.at(key)) {
+    removeEdge(e);
+  }
+
+  vertexMap.erase(key);
 }
 
 
@@ -72,7 +80,7 @@ E & Graph<V,E>::insertEdge(const V & v1, const V & v2) {
 * @param key2 The key of the destination Vertex
 */
 template <class V, class E>
-void Graph<V,E>::removeEdge(const std::string key1, const std::string key2) {  
+void Graph<V,E>::removeEdge(const std::string key1, const std::string key2) {
   // TODO: Part 2
 }
 
@@ -94,7 +102,7 @@ void Graph<V,E>::removeEdge(const edgeListIter & it) {
 * @param key The key of the given vertex
 * @return The list edges (by reference) that are adjacent to the given vertex
 */
-template <class V, class E>  
+template <class V, class E>
 const std::list<std::reference_wrapper<E>> Graph<V,E>::incidentEdges(const std::string key) const {
   // TODO: Part 2
   std::list<std::reference_wrapper<E>> edges;
