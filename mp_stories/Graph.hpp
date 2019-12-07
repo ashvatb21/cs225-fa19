@@ -85,6 +85,19 @@ E & Graph<V,E>::insertEdge(const V & v1, const V & v2) {
 template <class V, class E>
 void Graph<V,E>::removeEdge(const std::string key1, const std::string key2) {
   // TODO: Part 2
+  for (edgeListIter it = edgeList.begin(); it != edgeList.end(); ++it) {
+    Edge e = *it;
+
+    if (e.source().key() == key1 && e.dest().key() == key2) {
+      removeEdge(it);
+      break;
+    }
+
+    if (e.source().key() == key2 && e.dest().key() == key1 && e.directed()) {
+      removeEdge(it);
+      break;
+    }
+  }
 }
 
 
@@ -96,6 +109,13 @@ void Graph<V,E>::removeEdge(const std::string key1, const std::string key2) {
 template <class V, class E>
 void Graph<V,E>::removeEdge(const edgeListIter & it) {
   // TODO: Part 2
+  Edge e = *it;
+  Vertex s = e.source();
+  Vertex d = e.dest();
+  adjList.at(s.key()).remove(it);
+  adjList.at(d.key()).remove(it);
+  edgeList.erase(it);
+
 }
 
 
@@ -109,6 +129,10 @@ template <class V, class E>
 const std::list<std::reference_wrapper<E>> Graph<V,E>::incidentEdges(const std::string key) const {
   // TODO: Part 2
   std::list<std::reference_wrapper<E>> edges;
+  for(edgeListIter it : adjList.at(key)) {
+    edges.push_front(*it);
+  }
+
   return edges;
 }
 
@@ -123,5 +147,16 @@ const std::list<std::reference_wrapper<E>> Graph<V,E>::incidentEdges(const std::
 template <class V, class E>
 bool Graph<V,E>::isAdjacent(const std::string key1, const std::string key2) const {
   // TODO: Part 2
+  std::list<std::reference_wrapper<E>> listEdge = incidentEdges(key1);
+  for (Edge e : listEdge) {
+    if (e.source().key() == key1 && e.dest().key() == key2) {
+      return true;
+    }
+
+    if (e.source().key() == key2 && e.dest().key() == key1 && e.directed()) {
+      return true;
+    }
+  }
+
   return false;
 }
