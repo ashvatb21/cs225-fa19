@@ -68,7 +68,10 @@ template <class V, class E>
 E & Graph<V,E>::insertEdge(const V & v1, const V & v2) {
   // TODO: Part 2
   E & e = *(new E(v1, v2));
-
+  edgeList.push_front(e);
+  edgeListIter it = edgeList.begin();
+  adjList.at(v1.key()).push_front(it);
+  adjList.at(v2.key()).push_front(it);
   return e;
 }
 
