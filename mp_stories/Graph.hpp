@@ -50,10 +50,12 @@ V & Graph<V,E>::insertVertex(std::string key) {
 template <class V, class E>
 void Graph<V,E>::removeVertex(const std::string & key) {
   // TODO: Part 2
-  for (edgeListIter e : adjList.at(key)) {
-    removeEdge(e);
+  std::list<edgeListIter> temp = adjList.at(key);
+  for (auto it = temp.begin(); it != temp.end(); it++) {
+    edgeList.erase(*it);
   }
 
+  adjList.erase(key);
   vertexMap.erase(key);
 }
 
@@ -128,12 +130,16 @@ void Graph<V,E>::removeEdge(const edgeListIter & it) {
 template <class V, class E>
 const std::list<std::reference_wrapper<E>> Graph<V,E>::incidentEdges(const std::string key) const {
   // TODO: Part 2
-  std::list<std::reference_wrapper<E>> edges;
-  for(edgeListIter it : adjList.at(key)) {
-    edges.push_front(*it);
+  std::list<std::reference_wrapper<E>> e;
+  for (auto it = edgeList.begin(); it != edgeList.end(); it++) {
+    if ((*it).get().source() == key) {
+      e.push_back(*it);
+    }
+    if ((*it).get().dest()==key) {
+      e.push_back(*it);
+    }
   }
-
-  return edges;
+  return e;
 }
 
 
