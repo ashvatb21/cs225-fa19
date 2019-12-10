@@ -20,8 +20,48 @@
 template <class V, class E>
 std::list<std::string> Graph<V,E>::shortestPath(const std::string start, const std::string end) {
   // TODO: Part 3
-  std::list<std::string> path;
 
+  std::list<std::string> path;
+  std::unordered_map<std::string , std::string> parents;
+  bool found = false;
+  std::queue<std::string> q;
+  q.push(start);
+  parents.insert({start,start});
+  while (!found) {
+    std::string string = q.front();
+    q.pop();
+    std::list<std::reference_wrapper<E>> listEdge = incidentEdges(string);
+    for (Edge & e : listEdge) {
+      if (e.dest().key() == end) {
+        found = true;
+      }
+
+      if (e.source().key() == end) {
+        found = true;
+      }
+
+      if (parents.find(e.dest().key()) == parents.end()) {
+        q.push(e.dest().key());
+        parents.insert({e.dest().key(),e.source().key()});
+      }
+
+      if (parents.find(e.source().key()) == parents.end())
+      {
+        q.push(e.source().key());
+        parents.insert({e.source().key(),e.dest().key()});
+      }
+    }
+  }
+  bool done = false;
+  std::string temp = end;
+  while (!done) {
+    if (temp==start) {
+      done = true;
+    }
+    
+    path.push_front(temp);
+    temp = parents.at(temp);
+  }
 
   return path;
 }
